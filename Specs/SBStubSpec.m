@@ -16,7 +16,7 @@ describe(@"SBStub", ^{
     __block id originalObject;
     __block id<SBStub> stubbedObject;
 
-    beforeAll(^{
+    beforeEach(^{
         originalObject = [[NSObject alloc] init];
         stubbedObject = [Stubbilino stubObject:originalObject];
     });
