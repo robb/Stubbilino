@@ -18,6 +18,9 @@ static const char *SBTypeEncodingForMethod(const char *returnType, const char *a
 
 + (NSMutableSet *)stubbedClasses;
 
++ (id)methodStubForObject:(id)object selector:(SEL)selector;
++ (void)setMethodStub:(id)block forObject:(id)object selector:(SEL)selector;
+
 @end
 
 @implementation Stubbilino
@@ -29,21 +32,14 @@ static const char *SBTypeEncodingForMethod(const char *returnType, const char *a
     }
 
     void (^stubMethodWithBlock)(id, SEL, id) = ^(__unsafe_unretained NSObject *self, SEL selector, id block) {
-        NSMutableDictionary *associatedBlocks = objc_getAssociatedObject(self, SBAssociatedBlocks);
+        [Stubbilino setMethodStub:block forObject:self selector:selector];
 
-        if (!associatedBlocks) {
-            associatedBlocks = [NSMutableDictionary dictionary];
-            objc_setAssociatedObject(self, SBAssociatedBlocks, associatedBlocks, OBJC_ASSOCIATION_RETAIN);
-        }
-
-        associatedBlocks[NSStringFromSelector(selector)] = block;
         Method stubbedMethod = class_getInstanceMethod(object.class, selector);
         IMP oldImplementation = method_getImplementation(stubbedMethod);
 
         id (^invokeStub)(id) = ^id(__unsafe_unretained NSObject *self) {
-            NSDictionary *associatedBlocks = objc_getAssociatedObject(self, SBAssociatedBlocks);
+            id (^block)() = [Stubbilino methodStubForObject:self selector:selector];
 
-            id (^block)() = associatedBlocks[NSStringFromSelector(selector)];
             if (block) {
                 return block();
             } else {
@@ -63,9 +59,7 @@ static const char *SBTypeEncodingForMethod(const char *returnType, const char *a
                     SBTypeEncodingForMethod(@encode(id), @encode(SEL), @encode(id), nil));
 
     void (^removeStub)(id, SEL) = ^(__unsafe_unretained NSObject *self, SEL selector) {
-        NSMutableDictionary *associatedBlocks = objc_getAssociatedObject(self, SBAssociatedBlocks);
-
-        [associatedBlocks removeObjectForKey:NSStringFromSelector(selector)];
+        [Stubbilino setMethodStub:nil forObject:self selector:selector];
     };
 
     class_addMethod(object.class,
@@ -89,6 +83,29 @@ static const char *SBTypeEncodingForMethod(const char *returnType, const char *a
     });
     return stubbedClasses;
 }
+
++ (id)methodStubForObject:(id)object selector:(SEL)selector
+{
+    NSMutableDictionary *associatedBlocks = objc_getAssociatedObject(object, SBAssociatedBlocks);
+
+    return [associatedBlocks valueForKey:NSStringFromSelector(selector)];
+}
+
++ (void)setMethodStub:(id)block forObject:(id)object selector:(SEL)selector
+{
+    NSMutableDictionary *associatedBlocks = objc_getAssociatedObject(self, SBAssociatedBlocks);
+    if (!associatedBlocks) {
+        associatedBlocks = [NSMutableDictionary dictionary];
+        objc_setAssociatedObject(object, SBAssociatedBlocks, associatedBlocks, OBJC_ASSOCIATION_RETAIN);
+    }
+
+    [associatedBlocks setValue:block forKey:NSStringFromSelector(selector)];
+
+    if (associatedBlocks.count == 0) {
+        objc_setAssociatedObject(object, SBAssociatedBlocks, nil, OBJC_ASSOCIATION_RETAIN);
+    }
+}
+
 
 static const char *SBTypeEncodingForMethod(const char *returnType, const char *argTypes, ...)
 {
