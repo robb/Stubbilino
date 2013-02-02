@@ -12,7 +12,7 @@
 
 SpecBegin(SBStub)
 
-describe(@"SBStub", ^{
+describe(@"A stubbed object", ^{
     __block id originalObject;
     __block id<SBStub> stubbedObject;
 
@@ -21,7 +21,7 @@ describe(@"SBStub", ^{
         stubbedObject = [Stubbilino stubObject:originalObject];
     });
 
-    it(@"is identical to the stubbed object", ^{
+    it(@"is identical to the original object", ^{
         expect(stubbedObject).to.beIdenticalTo(originalObject);
     });
 
@@ -41,6 +41,15 @@ describe(@"SBStub", ^{
         [stubbedObject removeStub:@selector(description)];
 
         expect(stubbedObject.description).to.equal(originalDescription);
+    });
+
+    it(@"does not affect other objects", ^{
+        id otherObject = [[NSObject alloc] init];
+
+        [stubbedObject stubMethod:@selector(description)
+                        withBlock:^{ return @"stubbed"; }];
+
+        expect([otherObject description]).toNot.equal(@"stubbed");
     });
 });
 
