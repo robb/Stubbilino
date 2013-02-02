@@ -10,4 +10,9 @@
 
 @implementation Stubbilino
 
++ (id<SBStub>)stubObject:(id)object
+{
+    return nil;
+}
+
 @end

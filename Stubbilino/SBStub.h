@@ -1,5 +1,5 @@
 //
-//  Stubbilino.h
+//  SBStub.h
 //  Stubbilino
 //
 //  Created by Robb on 2/2/13.
@@ -8,10 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-#import "SBStub.h"
+@protocol SBStub <NSObject>
 
-@interface Stubbilino : NSObject
-
-+ (id<SBStub>)stubObject:(id)object;
+- (void)stubMethod:(SEL)method withBlock:(id)block;
+- (void)removeStub:(SEL)method;
 
 @end
