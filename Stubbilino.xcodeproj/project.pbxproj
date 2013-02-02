@@ -16,7 +16,6 @@
 		54BE761516BD80900037DC25 /* libStubbilino.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54BE75FC16BD80900037DC25 /* libStubbilino.a */; };
 		54BE761B16BD80900037DC25 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 54BE761916BD80900037DC25 /* InfoPlist.strings */; };
 		54BE761E16BD80900037DC25 /* StubbilinoSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 54BE761D16BD80900037DC25 /* StubbilinoSpec.m */; };
-		54BE763216BD88760037DC25 /* SBStubSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 54BE763116BD88760037DC25 /* SBStubSpec.m */; };
 		8CC3E77DDD29438AA6CBFC3C /* libPods-Specs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F01AE75C0841BC898CE934 /* libPods-Specs.a */; };
 /* End PBXBuildFile section */
 
@@ -57,7 +56,6 @@
 		54BE761D16BD80900037DC25 /* StubbilinoSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StubbilinoSpec.m; sourceTree = "<group>"; };
 		54BE762E16BD85F30037DC25 /* Specs-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Specs-Prefix.pch"; sourceTree = "<group>"; };
 		54BE762F16BD86DA0037DC25 /* SBStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBStub.h; sourceTree = "<group>"; };
-		54BE763116BD88760037DC25 /* SBStubSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBStubSpec.m; sourceTree = "<group>"; };
 		C224E916077B4DAE9C33FF8B /* Pods-Specs.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Specs.xcconfig"; path = "Pods/Pods-Specs.xcconfig"; sourceTree = SOURCE_ROOT; };
 		C3F01AE75C0841BC898CE934 /* libPods-Specs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Specs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -140,7 +138,6 @@
 			isa = PBXGroup;
 			children = (
 				54BE761D16BD80900037DC25 /* StubbilinoSpec.m */,
-				54BE763116BD88760037DC25 /* SBStubSpec.m */,
 				54BE761716BD80900037DC25 /* Supporting Files */,
 			);
 			path = Specs;
@@ -278,7 +275,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				54BE761E16BD80900037DC25 /* StubbilinoSpec.m in Sources */,
-				54BE763216BD88760037DC25 /* SBStubSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
