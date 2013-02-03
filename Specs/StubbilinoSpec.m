@@ -33,6 +33,22 @@ describe(@"A stubbed object", ^{
         expect(stubbedObject).to.beIdenticalTo(originalObject);
     });
 
+    it(@"has a stub class as its class", ^{
+        expect(stubbedObject.class).toNot.equal(SBTest.class);
+    });
+
+    it(@"stays a subclass of its original class", ^{
+        expect(stubbedObject).to.beKindOf(SBTest.class);
+    });
+
+    it(@"cannot be stubbed twice", ^{
+        Class stubbedClass = stubbedObject.class;
+
+        SBTest<SBStub> *doubleStubbed = [Stubbilino stubObject:stubbedObject];
+
+        expect(doubleStubbed.class).to.beIdenticalTo(stubbedClass);
+    });
+
     it(@"can stub methods", ^{
         [stubbedObject stubMethod:@selector(string)
                         withBlock:^{ return @"stubbed"; }];

@@ -14,6 +14,8 @@
 
 + (NSString *)nameOfStub:(Class)class;
 
++ (NSMutableSet *)stubClasses;
+
 @end
 
 static void SBStubMethodWithBlock(__unsafe_unretained id self, SEL cmd, SEL selector, id block) {
@@ -39,6 +41,10 @@ static void SBRemoveStub(__unsafe_unretained id self, SEL cmd, SEL selector) {
 
 + (id<SBStub>)stubObject:(NSObject *)object
 {
+    if ([Stubbilino.stubClasses containsObject:object.class]) {
+        return (id<SBStub>)object;
+    }
+
     NSString *name = [Stubbilino nameOfStub:object.class];
 
     Class stubClass = objc_allocateClassPair(object.class, name.UTF8String, 0);
@@ -49,6 +55,8 @@ static void SBRemoveStub(__unsafe_unretained id self, SEL cmd, SEL selector) {
 
     object_setClass(object, stubClass);
 
+    [Stubbilino.stubClasses addObject:stubClass];
+
     return (id<SBStub>)object;
 }
 
@@ -57,6 +65,16 @@ static void SBRemoveStub(__unsafe_unretained id self, SEL cmd, SEL selector) {
 + (NSString *)nameOfStub:(Class)class
 {
     return [NSString stringWithFormat:@"SBStubOf%@", NSStringFromClass(class)];
+}
+
++ (NSMutableSet *)stubClasses
+{
+    static NSMutableSet *stubClasses;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        stubClasses = [[NSMutableSet alloc] init];
+    });
+    return stubClasses;
 }
 
 @end
