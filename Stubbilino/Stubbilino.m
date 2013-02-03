@@ -41,19 +41,11 @@ static void SBRemoveStub(__unsafe_unretained id self, SEL cmd, SEL selector) {
 {
     NSString *name = [Stubbilino nameOfStub:object.class];
 
-    Class stubClass = NSClassFromString(name);
+    Class stubClass = objc_allocateClassPair(object.class, name.UTF8String, 0);
 
-    if (!stubClass) {
-        // Create a new class pair to inject into the objects class hierachy
-        stubClass = objc_allocateClassPair(object.class, name.UTF8String, 0);
-
-        // Add implementations for stubMethod:withBlock: and removeStub:
-        class_addMethod(stubClass, @selector(stubMethod:withBlock:), (IMP)&SBStubMethodWithBlock, "v@::@");
-        class_addMethod(stubClass, @selector(removeStub:), (IMP)&SBRemoveStub, "v@::");
-
-        // Register the class
-        objc_registerClassPair(stubClass);
-    }
+    // Add implementations for stubMethod:withBlock: and removeStub:
+    class_addMethod(stubClass, @selector(stubMethod:withBlock:), (IMP)&SBStubMethodWithBlock, "v@::@");
+    class_addMethod(stubClass, @selector(removeStub:), (IMP)&SBRemoveStub, "v@::");
 
     object_setClass(object, stubClass);
 
@@ -64,13 +56,7 @@ static void SBRemoveStub(__unsafe_unretained id self, SEL cmd, SEL selector) {
 
 + (NSString *)nameOfStub:(Class)class
 {
-    static NSUInteger counter;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        counter = 0;
-    });
-
-    return [NSString stringWithFormat:@"SBStubOf%@_%u", NSStringFromClass(class), counter++];
+    return [NSString stringWithFormat:@"SBStubOf%@", NSStringFromClass(class)];
 }
 
 @end
