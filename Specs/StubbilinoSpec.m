@@ -8,7 +8,7 @@
 
 #import "Stubbilino.h"
 
-#import "SBTest.h"
+#import "SBTestObject.h"
 
 SpecBegin(Stubbilino)
 
@@ -21,11 +21,11 @@ describe(@"Stubbilino", ^{
 });
 
 describe(@"A stubbed object", ^{
-    __block SBTest *originalObject;
-    __block SBTest<SBStub> *stubbedObject;
+    __block SBTestObject *originalObject;
+    __block SBTestObject<SBStub> *stubbedObject;
 
     beforeEach(^{
-        originalObject = [[SBTest alloc] init];
+        originalObject = [[SBTestObject alloc] init];
         stubbedObject = [Stubbilino stubObject:originalObject];
     });
 
@@ -34,33 +34,33 @@ describe(@"A stubbed object", ^{
     });
 
     it(@"has a stub class as its class", ^{
-        expect(stubbedObject.class).toNot.equal(SBTest.class);
+        expect(stubbedObject.class).toNot.equal(SBTestObject.class);
     });
 
     it(@"stays a subclass of its original class", ^{
-        expect(stubbedObject).to.beKindOf(SBTest.class);
+        expect(stubbedObject).to.beKindOf(SBTestObject.class);
     });
 
     it(@"cannot be stubbed twice", ^{
         Class stubbedClass = stubbedObject.class;
 
-        SBTest<SBStub> *doubleStubbed = [Stubbilino stubObject:stubbedObject];
+        SBTestObject<SBStub> *doubleStubbed = [Stubbilino stubObject:stubbedObject];
 
         expect(doubleStubbed.class).to.beIdenticalTo(stubbedClass);
     });
 
     it(@"can be unstubbed", ^{
-        SBTest *formerStub = [Stubbilino unstubObject:stubbedObject];
+        SBTestObject *formerStub = [Stubbilino unstubObject:stubbedObject];
 
-        expect(formerStub.class).to.equal(SBTest.class);
+        expect(formerStub.class).to.equal(SBTestObject.class);
     });
 });
 
 describe(@"Method stubs", ^{
-    __block SBTest<SBStub> *stubbedObject;
+    __block SBTestObject<SBStub> *stubbedObject;
 
     beforeEach(^{
-        stubbedObject = [Stubbilino stubObject:[[SBTest alloc] init]];
+        stubbedObject = [Stubbilino stubObject:[[SBTestObject alloc] init]];
     });
 
     it(@"invoke the stub block", ^{
@@ -107,7 +107,7 @@ describe(@"Method stubs", ^{
     });
 
     it(@"do not affect other objects", ^{
-        SBTest *otherObject = [[SBTest alloc] init];
+        SBTestObject *otherObject = [[SBTestObject alloc] init];
 
         [stubbedObject stubMethod:@selector(string)
                         withBlock:^{ return @"Stubbed"; }];
@@ -123,7 +123,7 @@ describe(@"Method stubs", ^{
     });
 
     it(@"do not affect other stubs", ^{
-        SBTest<SBStub> *otherObject = [Stubbilino stubObject:[[SBTest alloc] init]];
+        SBTestObject<SBStub> *otherObject = [Stubbilino stubObject:[[SBTestObject alloc] init]];
 
         [otherObject stubMethod:@selector(string)
                       withBlock:^{ return @"Other object"; }];

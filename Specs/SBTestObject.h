@@ -1,5 +1,5 @@
 //
-//  SBTest.h
+//  SBTestObject.h
 //  Stubbilino
 //
 //  Created by Robert Böhnke on 2/3/13.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SBTest : NSObject
+@interface SBTestObject : NSObject
 
 - (NSString *)string;
 - (NSString *)identity:(NSString *)string;

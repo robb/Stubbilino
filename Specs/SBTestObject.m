@@ -1,14 +1,14 @@
 //
-//  SBTest.m
+//  SBTestObject.m
 //  Stubbilino
 //
 //  Created by Robert Böhnke on 2/3/13.
 //  Copyright (c) 2013 Robert Böhnke. All rights reserved.
 //
 
-#import "SBTest.h"
+#import "SBTestObject.h"
 
-@implementation SBTest
+@implementation SBTestObject
 
 - (NSString *)string
 {
