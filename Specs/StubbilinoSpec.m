@@ -90,6 +90,13 @@ describe(@"Stubbing methods", ^{
 
         expect(otherObject.string).toNot.equal(@"Stubbed");
     });
+
+    it(@"does not affect other methods", ^{
+        [stubbedObject stubMethod:@selector(string)
+                        withBlock:^{ return @"Stubbed"; }];
+
+        expect([stubbedObject identity:@"Not stubbed"]).to.equal(@"Not stubbed");
+    });
 });
 
 SpecEnd
