@@ -63,20 +63,29 @@ describe(@"Method stubs", ^{
         stubbedObject = [Stubbilino stubObject:[[SBTest alloc] init]];
     });
 
-    it(@"are invoked when the method is called", ^{
+    it(@"invoke the stub block", ^{
         [stubbedObject stubMethod:@selector(string)
                         withBlock:^{ return @"Stubbed"; }];
 
         expect(stubbedObject.string).to.equal(@"Stubbed");
     });
 
-    it(@"can access method arguments", ^{
+    it(@"can access object arguments", ^{
         [stubbedObject stubMethod:@selector(identity:)
                         withBlock:^(id self, NSString *string){
                             return [[string substringFromIndex:4] capitalizedString];
                         }];
 
         expect([stubbedObject identity:@"Not stubbed"]).to.equal(@"Stubbed");
+    });
+
+    it(@"can access primitive arguments", ^{
+        [stubbedObject stubMethod:@selector(sumOf:and:)
+                        withBlock:^(id self, char a, char b){
+                            return a + b + 1;
+                        }];
+
+        expect([stubbedObject sumOf:2 and:2]).to.equal(5);
     });
 
     it(@"can be removed", ^{

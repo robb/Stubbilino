@@ -20,4 +20,9 @@
     return string;
 }
 
+- (char)sumOf:(char)a and:(char)b
+{
+    return a + b;
+}
+
 @end
