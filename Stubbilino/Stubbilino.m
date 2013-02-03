@@ -52,6 +52,26 @@ static void SBRemoveStub(__unsafe_unretained id self, SEL cmd, SEL selector) {
     class_addMethod(stubClass, @selector(stubMethod:withBlock:), (IMP)&SBStubMethodWithBlock, "v@::@");
     class_addMethod(stubClass, @selector(removeStub:), (IMP)&SBRemoveStub, "v@::");
 
+    SEL deallocSelector = sel_registerName("dealloc");
+
+    Method deallocMethod = class_getInstanceMethod(object.class, deallocSelector);
+    void (*originalDealloc)(id, SEL) = (__typeof__(originalDealloc))method_getImplementation(deallocMethod);
+
+    id newDealloc = ^(__unsafe_unretained id self) {
+        Class stubClass = object_getClass(self);
+        Class originalClass = class_getSuperclass(stubClass);
+
+        object_setClass(self, originalClass);
+
+        [Stubbilino.stubClasses removeObject:stubClass];
+
+        objc_disposeClassPair(stubClass);
+
+        originalDealloc(self, deallocSelector);
+    };
+
+    class_addMethod(stubClass, deallocSelector, imp_implementationWithBlock(newDealloc), "v@:");
+
     object_setClass(object, stubClass);
 
     [Stubbilino.stubClasses addObject:stubClass];
