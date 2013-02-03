@@ -12,6 +12,6 @@
 
 @interface Stubbilino : NSObject
 
-+ (NSObject<SBStub> *)stubObject:(NSObject *)object;
++ (id<SBStub>)stubObject:(NSObject *)object;
 
 @end
