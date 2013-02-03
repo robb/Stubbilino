@@ -37,13 +37,13 @@ static const char *SBTypeEncodingForMethod(const char *returnType, const char *a
         Method stubbedMethod = class_getInstanceMethod(object.class, selector);
         IMP oldImplementation = method_getImplementation(stubbedMethod);
 
-        id (^invokeStub)(id) = ^id(__unsafe_unretained NSObject *self) {
+        id (^invokeStub)(id, void **) = ^id(__unsafe_unretained NSObject *self, void **args) {
             id (^block)() = [Stubbilino methodStubForObject:self selector:selector];
 
             if (block) {
-                return block();
+                return block(args);
             } else {
-                return oldImplementation(self, selector);
+                return oldImplementation(self, selector, args);
             }
         };
 
