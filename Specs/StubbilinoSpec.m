@@ -97,6 +97,19 @@ describe(@"Stubbing methods", ^{
 
         expect([stubbedObject identity:@"Not stubbed"]).to.equal(@"Not stubbed");
     });
+
+    it(@"does not affect other stubs", ^{
+        SBTest<SBStub> *otherObject = [Stubbilino stubObject:[[SBTest alloc] init]];
+
+        [otherObject stubMethod:@selector(string)
+                      withBlock:^{ return @"Other object"; }];
+
+        [stubbedObject stubMethod:@selector(string)
+                        withBlock:^{ return @"Stubbed"; }];
+
+        expect(otherObject.string).to.equal(@"Other object");
+        expect(stubbedObject.string).to.equal(@"Stubbed");
+    });
 });
 
 SpecEnd
