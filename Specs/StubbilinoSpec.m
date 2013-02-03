@@ -42,7 +42,7 @@ describe(@"A stubbed object", ^{
 
     it(@"can access method arguments", ^{
         [stubbedObject stubMethod:@selector(identity:)
-                        withBlock:^(NSString *string){
+                        withBlock:^(id self, NSString *string){
                             return [string substringFromIndex:4];
                         }];
 
