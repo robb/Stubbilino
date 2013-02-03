@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		541E1D5F16BEAFEA008FA538 /* libobjc.A.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 541E1D5E16BEAFEA008FA538 /* libobjc.A.dylib */; };
 		54BE760016BD80900037DC25 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54BE75FF16BD80900037DC25 /* Foundation.framework */; };
 		54BE760516BD80900037DC25 /* Stubbilino.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 54BE760416BD80900037DC25 /* Stubbilino.h */; };
 		54BE760716BD80900037DC25 /* Stubbilino.m in Sources */ = {isa = PBXBuildFile; fileRef = 54BE760616BD80900037DC25 /* Stubbilino.m */; };
@@ -45,7 +44,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		541E1D5E16BEAFEA008FA538 /* libobjc.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libobjc.A.dylib; path = usr/lib/libobjc.A.dylib; sourceTree = SDKROOT; };
 		54BE75FC16BD80900037DC25 /* libStubbilino.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libStubbilino.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		54BE75FF16BD80900037DC25 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		54BE760316BD80900037DC25 /* Stubbilino-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Stubbilino-Prefix.pch"; sourceTree = "<group>"; };
@@ -70,7 +68,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				541E1D5F16BEAFEA008FA538 /* libobjc.A.dylib in Frameworks */,
 				54BE760016BD80900037DC25 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -113,7 +110,6 @@
 		54BE75FE16BD80900037DC25 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				541E1D5E16BEAFEA008FA538 /* libobjc.A.dylib */,
 				54BE75FF16BD80900037DC25 /* Foundation.framework */,
 				54BE760E16BD80900037DC25 /* SenTestingKit.framework */,
 				54BE761016BD80900037DC25 /* UIKit.framework */,
