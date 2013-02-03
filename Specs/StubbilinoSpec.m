@@ -88,11 +88,20 @@ describe(@"Method stubs", ^{
         expect([stubbedObject sumOf:2 and:2]).to.equal(5);
     });
 
-    it(@"can be removed", ^{
+    it(@"can be removed individually", ^{
         [stubbedObject stubMethod:@selector(string)
                         withBlock:^{ return @"Stubbed"; }];
 
         [stubbedObject removeStub:@selector(string)];
+
+        expect(stubbedObject.string).to.equal(@"Not stubbed");
+    });
+
+    it(@"can be removed by unstubbing the object", ^{
+        [stubbedObject stubMethod:@selector(string)
+                        withBlock:^{ return @"Stubbed"; }];
+
+        [Stubbilino unstubObject:stubbedObject];
 
         expect(stubbedObject.string).to.equal(@"Not stubbed");
     });
