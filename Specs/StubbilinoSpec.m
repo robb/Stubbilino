@@ -40,6 +40,15 @@ describe(@"A stubbed object", ^{
         expect(stubbedObject.string).to.equal(@"stubbed");
     });
 
+    it(@"can access method arguments", ^{
+        [stubbedObject stubMethod:@selector(identity:)
+                        withBlock:^(NSString *string){
+                            return [string substringFromIndex:4];
+                        }];
+
+        expect([stubbedObject identity:@"Not stubbed"]).to.equal(@"stubbed");
+    });
+
     it(@"can remove stubbed methods", ^{
         NSString *originalString = originalObject.string;
 
