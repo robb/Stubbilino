@@ -8,6 +8,8 @@
 
 #import "Stubbilino.h"
 
+#import "SBTest.h"
+
 SpecBegin(Stubbilino)
 
 describe(@"Stubbilino", ^{
@@ -19,11 +21,11 @@ describe(@"Stubbilino", ^{
 });
 
 describe(@"A stubbed object", ^{
-    __block id originalObject;
-    __block id<SBStub> stubbedObject;
+    __block SBTest *originalObject;
+    __block SBTest<SBStub> *stubbedObject;
 
     beforeEach(^{
-        originalObject = [[NSObject alloc] init];
+        originalObject = [[SBTest alloc] init];
         stubbedObject = [Stubbilino stubObject:originalObject];
     });
 
@@ -32,30 +34,30 @@ describe(@"A stubbed object", ^{
     });
 
     it(@"can stub methods", ^{
-        [stubbedObject stubMethod:@selector(description)
+        [stubbedObject stubMethod:@selector(string)
                         withBlock:^{ return @"stubbed"; }];
 
-        expect(stubbedObject.description).to.equal(@"stubbed");
+        expect(stubbedObject.string).to.equal(@"stubbed");
     });
 
     it(@"can remove stubbed methods", ^{
-        NSString *originalDescription = [originalObject description];
+        NSString *originalString = originalObject.string;
 
-        [stubbedObject stubMethod:@selector(description)
+        [stubbedObject stubMethod:@selector(string)
                         withBlock:^{ return @"stubbed"; }];
 
-        [stubbedObject removeStub:@selector(description)];
+        [stubbedObject removeStub:@selector(string)];
 
-        expect(stubbedObject.description).to.equal(originalDescription);
+        expect(stubbedObject.string).to.equal(originalString);
     });
 
     it(@"does not affect other objects", ^{
-        id otherObject = [[NSObject alloc] init];
+        SBTest *otherObject = [[SBTest alloc] init];
 
-        [stubbedObject stubMethod:@selector(description)
+        [stubbedObject stubMethod:@selector(string)
                         withBlock:^{ return @"stubbed"; }];
 
-        expect([otherObject description]).toNot.equal(@"stubbed");
+        expect(otherObject.string).toNot.equal(@"stubbed");
     });
 });
 
