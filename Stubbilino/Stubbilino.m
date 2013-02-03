@@ -60,6 +60,24 @@ static void SBRemoveStub(__unsafe_unretained id self, SEL cmd, SEL selector) {
     return (id<SBStub>)object;
 }
 
++ (id)unstubObject:(NSObject<SBStub> *)object
+{
+    if (![Stubbilino.stubClasses containsObject:object.class]) {
+        return (id<SBStub>)object;
+    }
+
+    Class stubClass = object_getClass(object);
+    Class originalClass = class_getSuperclass(stubClass);
+
+    object_setClass(object, originalClass);
+
+    [Stubbilino.stubClasses removeObject:stubClass];
+
+    objc_disposeClassPair(stubClass);
+
+    return object;
+}
+
 #pragma mark - Private
 
 + (NSString *)nameOfStub:(Class)class

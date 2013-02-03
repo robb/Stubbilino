@@ -48,6 +48,12 @@ describe(@"A stubbed object", ^{
 
         expect(doubleStubbed.class).to.beIdenticalTo(stubbedClass);
     });
+
+    it(@"can be unstubbed", ^{
+        SBTest *formerStub = [Stubbilino unstubObject:stubbedObject];
+
+        expect(formerStub.class).to.equal(SBTest.class);
+    });
 });
 
 describe(@"Method stubs", ^{
