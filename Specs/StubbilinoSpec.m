@@ -50,14 +50,14 @@ describe(@"A stubbed object", ^{
     });
 });
 
-describe(@"Stubbing methods", ^{
+describe(@"Method stubs", ^{
     __block SBTest<SBStub> *stubbedObject;
 
     beforeEach(^{
         stubbedObject = [Stubbilino stubObject:[[SBTest alloc] init]];
     });
 
-    it(@"can stub methods", ^{
+    it(@"are invoked when the method is called", ^{
         [stubbedObject stubMethod:@selector(string)
                         withBlock:^{ return @"Stubbed"; }];
 
@@ -73,7 +73,7 @@ describe(@"Stubbing methods", ^{
         expect([stubbedObject identity:@"Not stubbed"]).to.equal(@"Stubbed");
     });
 
-    it(@"can remove stubbed methods", ^{
+    it(@"can be removed", ^{
         [stubbedObject stubMethod:@selector(string)
                         withBlock:^{ return @"Stubbed"; }];
 
@@ -82,7 +82,7 @@ describe(@"Stubbing methods", ^{
         expect(stubbedObject.string).to.equal(@"Not stubbed");
     });
 
-    it(@"does not affect other objects", ^{
+    it(@"do not affect other objects", ^{
         SBTest *otherObject = [[SBTest alloc] init];
 
         [stubbedObject stubMethod:@selector(string)
@@ -91,14 +91,14 @@ describe(@"Stubbing methods", ^{
         expect(otherObject.string).toNot.equal(@"Stubbed");
     });
 
-    it(@"does not affect other methods", ^{
+    it(@"do not affect other methods", ^{
         [stubbedObject stubMethod:@selector(string)
                         withBlock:^{ return @"Stubbed"; }];
 
         expect([stubbedObject identity:@"Not stubbed"]).to.equal(@"Not stubbed");
     });
 
-    it(@"does not affect other stubs", ^{
+    it(@"do not affect other stubs", ^{
         SBTest<SBStub> *otherObject = [Stubbilino stubObject:[[SBTest alloc] init]];
 
         [otherObject stubMethod:@selector(string)
