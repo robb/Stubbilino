@@ -49,7 +49,6 @@ static void SBRemoveStub(__unsafe_unretained id self, SEL cmd, SEL selector) {
 
     Class stubClass = objc_allocateClassPair(object.class, name.UTF8String, 0);
 
-    // Add implementations for stubMethod:withBlock: and removeStub:
     class_addMethod(stubClass, @selector(stubMethod:withBlock:), (IMP)&SBStubMethodWithBlock, "v@::@");
     class_addMethod(stubClass, @selector(removeStub:), (IMP)&SBRemoveStub, "v@::");
 
