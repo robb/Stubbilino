@@ -2,7 +2,7 @@
 //  SBTest.m
 //  Stubbilino
 //
-//  Created by Robb on 2/3/13.
+//  Created by Robert Böhnke on 2/3/13.
 //  Copyright (c) 2013 Robert Böhnke. All rights reserved.
 //
 
