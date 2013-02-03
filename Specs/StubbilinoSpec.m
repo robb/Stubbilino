@@ -48,41 +48,47 @@ describe(@"A stubbed object", ^{
 
         expect(doubleStubbed.class).to.beIdenticalTo(stubbedClass);
     });
+});
+
+describe(@"Stubbing methods", ^{
+    __block SBTest<SBStub> *stubbedObject;
+
+    beforeEach(^{
+        stubbedObject = [Stubbilino stubObject:[[SBTest alloc] init]];
+    });
 
     it(@"can stub methods", ^{
         [stubbedObject stubMethod:@selector(string)
-                        withBlock:^{ return @"stubbed"; }];
+                        withBlock:^{ return @"Stubbed"; }];
 
-        expect(stubbedObject.string).to.equal(@"stubbed");
+        expect(stubbedObject.string).to.equal(@"Stubbed");
     });
 
     it(@"can access method arguments", ^{
         [stubbedObject stubMethod:@selector(identity:)
                         withBlock:^(id self, NSString *string){
-                            return [string substringFromIndex:4];
+                            return [[string substringFromIndex:4] capitalizedString];
                         }];
 
-        expect([stubbedObject identity:@"Not stubbed"]).to.equal(@"stubbed");
+        expect([stubbedObject identity:@"Not stubbed"]).to.equal(@"Stubbed");
     });
 
     it(@"can remove stubbed methods", ^{
-        NSString *originalString = originalObject.string;
-
         [stubbedObject stubMethod:@selector(string)
-                        withBlock:^{ return @"stubbed"; }];
+                        withBlock:^{ return @"Stubbed"; }];
 
         [stubbedObject removeStub:@selector(string)];
 
-        expect(stubbedObject.string).to.equal(originalString);
+        expect(stubbedObject.string).to.equal(@"Not stubbed");
     });
 
     it(@"does not affect other objects", ^{
         SBTest *otherObject = [[SBTest alloc] init];
 
         [stubbedObject stubMethod:@selector(string)
-                        withBlock:^{ return @"stubbed"; }];
+                        withBlock:^{ return @"Stubbed"; }];
 
-        expect(otherObject.string).toNot.equal(@"stubbed");
+        expect(otherObject.string).toNot.equal(@"Stubbed");
     });
 });
 
