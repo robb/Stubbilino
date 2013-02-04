@@ -53,6 +53,8 @@ original state.
 [Stubbilino unstubObject:stub];
 ```
 
+### Class Methods
+
 Class methods can also be stubbed.
 
 ```objective-c
