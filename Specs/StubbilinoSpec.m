@@ -79,6 +79,13 @@ describe(@"Method stubs", ^{
         stubbedObject = [Stubbilino stubObject:[[SBTestObject alloc] init]];
     });
 
+    it(@"raise an exception if the stubbed object does not respond to the selector", ^{
+        expect(^{
+            [stubbedObject stubMethod:@selector(notImplemented)
+                            withBlock:^{ return @"Stubbed"; }];
+        }).to.raise(NSInvalidArgumentException);
+    });
+
     it(@"invoke the stub block", ^{
         [stubbedObject stubMethod:@selector(string)
                         withBlock:^{ return @"Stubbed"; }];

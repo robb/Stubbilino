@@ -35,6 +35,11 @@
 @end
 
 static void SBStubMethodWithBlock(__unsafe_unretained id self, SEL cmd, SEL selector, id block) {
+    if (![self respondsToSelector:selector]) {
+        [NSException raise:NSInvalidArgumentException
+                    format:@"Stubbed object does not respond to selector %@", NSStringFromSelector(selector)];
+    }
+
     Method method = class_getInstanceMethod([self class], selector);
 
     class_replaceMethod([self class],
