@@ -72,7 +72,7 @@ describe(@"A stubbed object", ^{
     });
 });
 
-describe(@"Method stubs", ^{
+describe(@"Instance method stubs", ^{
     __block SBTestObject<SBStub> *stubbedObject;
 
     beforeEach(^{
@@ -156,6 +156,50 @@ describe(@"Method stubs", ^{
 
         expect(otherObject.string).to.equal(@"Other object");
         expect(stubbedObject.string).to.equal(@"Stubbed");
+    });
+});
+
+describe(@"Class method stubs", ^{
+    __block Class<SBClassStub> stubbedClass;
+
+    beforeEach(^{
+        stubbedClass = [Stubbilino stubClass:SBTestObject.class];
+    });
+
+    afterEach(^{
+        [Stubbilino unstubClass:SBTestObject.class];
+    });
+
+    it(@"raise an exception if the stubbed class does not respond to the selector", ^{
+        expect(^{
+            [stubbedClass stubMethod:@selector(notImplemented)
+                           withBlock:^{ return @"Stubbed"; }];
+        }).to.raise(NSInvalidArgumentException);
+    });
+
+    it(@"invoke the stub block", ^{
+        [stubbedClass stubMethod:@selector(classMethod)
+                       withBlock:^{ return @"Stubbed"; }];
+
+        expect(SBTestObject.classMethod).to.equal(@"Stubbed");
+    });
+
+    it(@"can be removed individually", ^{
+        [stubbedClass stubMethod:@selector(classMethod)
+                        withBlock:^{ return @"Stubbed"; }];
+
+        [stubbedClass removeStub:@selector(classMethod)];
+
+        expect(SBTestObject.classMethod).to.equal(@"Not stubbed");
+    });
+
+    it(@"can be removed by unstubbing the class", ^{
+        [stubbedClass stubMethod:@selector(classMethod)
+                        withBlock:^{ return @"Stubbed"; }];
+
+        [Stubbilino unstubClass:stubbedClass];
+
+        expect(SBTestObject.classMethod).to.equal(@"Not stubbed");
     });
 });
 

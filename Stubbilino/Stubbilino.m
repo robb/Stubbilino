@@ -118,6 +118,16 @@ static void SBRemoveStub(__unsafe_unretained id self, SEL cmd, SEL selector) {
     return object;
 }
 
++ (Class<SBStub>)stubClass:(Class)class
+{
+    return (Class<SBStub>)[self stubObject:(id)class];
+}
+
++ (Class)unstubClass:(Class<SBStub>)class
+{
+    return (Class)[self unstubObject:(id)class];
+}
+
 #pragma mark - Private
 
 + (NSString *)nameOfStub:(Class)class

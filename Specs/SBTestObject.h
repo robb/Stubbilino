@@ -26,6 +26,8 @@
 
 @interface SBTestObject : NSObject
 
++ (NSString *)classMethod;
+
 - (NSString *)string;
 - (NSString *)identity:(NSString *)string;
 - (char)sumOf:(char)a and:(char)b;

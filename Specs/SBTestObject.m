@@ -26,6 +26,11 @@
 
 @implementation SBTestObject
 
++ (NSString *)classMethod
+{
+    return @"Not stubbed";
+}
+
 - (NSString *)string
 {
     return @"Not stubbed";

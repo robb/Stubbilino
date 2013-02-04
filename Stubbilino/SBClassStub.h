@@ -1,5 +1,5 @@
 //
-//  Stubbilino.h
+//  SBClassStub.h
 //  Stubbilino
 //
 //  Copyright (c) 2013 Robert Böhnke
@@ -24,15 +24,9 @@
 
 #import <Foundation/Foundation.h>
 
-#import "SBStub.h"
-#import "SBClassStub.h"
+@protocol SBClassStub <NSObject>
 
-@interface Stubbilino : NSObject
-
-+ (id<SBStub>)stubObject:(NSObject *)object;
-+ (id)unstubObject:(NSObject<SBStub> *)object;
-
-+ (Class<SBClassStub>)stubClass:(Class)class;
-+ (Class)unstubClass:(Class<SBClassStub>)class;
++ (void)stubMethod:(SEL)method withBlock:(id)block;
++ (void)removeStub:(SEL)method;
 
 @end
