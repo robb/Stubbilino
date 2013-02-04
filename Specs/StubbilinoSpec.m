@@ -87,75 +87,75 @@ describe(@"Instance method stubs", ^{
     });
 
     it(@"invoke the stub block", ^{
-        [stubbedObject stubMethod:@selector(string)
+        [stubbedObject stubMethod:@selector(instanceMethod)
                         withBlock:^{ return @"Stubbed"; }];
 
-        expect(stubbedObject.string).to.equal(@"Stubbed");
+        expect(stubbedObject.instanceMethod).to.equal(@"Stubbed");
     });
 
     it(@"can access object arguments", ^{
-        [stubbedObject stubMethod:@selector(identity:)
+        [stubbedObject stubMethod:@selector(instanceMethodWithObjectArgument:)
                         withBlock:^(id self, NSString *string){
                             return [[string substringFromIndex:4] capitalizedString];
                         }];
 
-        expect([stubbedObject identity:@"Not stubbed"]).to.equal(@"Stubbed");
+        expect([stubbedObject instanceMethodWithObjectArgument:@"Not stubbed"]).to.equal(@"Stubbed");
     });
 
     it(@"can access primitive arguments", ^{
-        [stubbedObject stubMethod:@selector(sumOf:and:)
-                        withBlock:^(id self, char a, char b){
-                            return a + b + 1;
+        [stubbedObject stubMethod:@selector(instanceMethodWithPrimitiveArgument:)
+                        withBlock:^(id self, char arg){
+                            return arg + 1;
                         }];
 
-        expect([stubbedObject sumOf:2 and:2]).to.equal(5);
+        expect([stubbedObject instanceMethodWithPrimitiveArgument:2]).to.equal(3);
     });
 
     it(@"can be removed individually", ^{
-        [stubbedObject stubMethod:@selector(string)
+        [stubbedObject stubMethod:@selector(instanceMethod)
                         withBlock:^{ return @"Stubbed"; }];
 
-        [stubbedObject removeStub:@selector(string)];
+        [stubbedObject removeStub:@selector(instanceMethod)];
 
-        expect(stubbedObject.string).to.equal(@"Not stubbed");
+        expect(stubbedObject.instanceMethod).to.equal(@"Not stubbed");
     });
 
     it(@"can be removed by unstubbing the object", ^{
-        [stubbedObject stubMethod:@selector(string)
+        [stubbedObject stubMethod:@selector(instanceMethod)
                         withBlock:^{ return @"Stubbed"; }];
 
         [Stubbilino unstubObject:stubbedObject];
 
-        expect(stubbedObject.string).to.equal(@"Not stubbed");
+        expect(stubbedObject.instanceMethod).to.equal(@"Not stubbed");
     });
 
     it(@"do not affect other objects", ^{
         SBTestObject *otherObject = [[SBTestObject alloc] init];
 
-        [stubbedObject stubMethod:@selector(string)
+        [stubbedObject stubMethod:@selector(instanceMethod)
                         withBlock:^{ return @"Stubbed"; }];
 
-        expect(otherObject.string).toNot.equal(@"Stubbed");
+        expect(otherObject.instanceMethod).toNot.equal(@"Stubbed");
     });
 
     it(@"do not affect other methods", ^{
-        [stubbedObject stubMethod:@selector(string)
+        [stubbedObject stubMethod:@selector(instanceMethod)
                         withBlock:^{ return @"Stubbed"; }];
 
-        expect([stubbedObject identity:@"Not stubbed"]).to.equal(@"Not stubbed");
+        expect([stubbedObject instanceMethodWithObjectArgument:@"Not stubbed"]).to.equal(@"Not stubbed");
     });
 
     it(@"do not affect other stubs", ^{
         SBTestObject<SBStub> *otherObject = [Stubbilino stubObject:[[SBTestObject alloc] init]];
 
-        [otherObject stubMethod:@selector(string)
+        [otherObject stubMethod:@selector(instanceMethod)
                       withBlock:^{ return @"Other object"; }];
 
-        [stubbedObject stubMethod:@selector(string)
+        [stubbedObject stubMethod:@selector(instanceMethod)
                         withBlock:^{ return @"Stubbed"; }];
 
-        expect(otherObject.string).to.equal(@"Other object");
-        expect(stubbedObject.string).to.equal(@"Stubbed");
+        expect(otherObject.instanceMethod).to.equal(@"Other object");
+        expect(stubbedObject.instanceMethod).to.equal(@"Stubbed");
     });
 });
 

@@ -27,9 +27,11 @@
 @interface SBTestObject : NSObject
 
 + (NSString *)classMethod;
++ (NSString *)classMethodWithObjectArgument:(NSString *)argument;
++ (char)classMethodWithPrimitiveArgument:(char)argument;
 
-- (NSString *)string;
-- (NSString *)identity:(NSString *)string;
-- (char)sumOf:(char)a and:(char)b;
+- (NSString *)instanceMethod;
+- (NSString *)instanceMethodWithObjectArgument:(NSString *)argument;
+- (char)instanceMethodWithPrimitiveArgument:(char)argument;
 
 @end

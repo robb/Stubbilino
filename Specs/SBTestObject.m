@@ -31,19 +31,29 @@
     return @"Not stubbed";
 }
 
-- (NSString *)string
++ (NSString *)classMethodWithObjectArgument:(NSString *)argument
 {
     return @"Not stubbed";
 }
 
-- (NSString *)identity:(NSString *)string
++ (char)classMethodWithPrimitiveArgument:(char)argument
 {
-    return string;
+    return 0;
 }
 
-- (char)sumOf:(char)a and:(char)b
+- (NSString *)instanceMethod
 {
-    return a + b;
+    return @"Not stubbed";
+}
+
+- (NSString *)instanceMethodWithObjectArgument:(NSString *)argument
+{
+    return @"Not stubbed";
+}
+
+- (char)instanceMethodWithPrimitiveArgument:(char)argument
+{
+    return 0;
 }
 
 @end
