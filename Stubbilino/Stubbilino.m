@@ -40,18 +40,18 @@ static void SBStubMethodWithBlock(__unsafe_unretained id self, SEL cmd, SEL sele
                     format:@"Stubbed object does not respond to selector %@", NSStringFromSelector(selector)];
     }
 
-    Method method = class_getInstanceMethod([self class], selector);
+    Method method = class_getInstanceMethod(object_getClass(self), selector);
 
-    class_replaceMethod([self class],
+    class_replaceMethod(object_getClass(self),
                         selector,
                         imp_implementationWithBlock(block),
                         method_getTypeEncoding(method));
 }
 
 static void SBRemoveStub(__unsafe_unretained id self, SEL cmd, SEL selector) {
-    Method superMethod = class_getInstanceMethod(class_getSuperclass([self class]), selector);
+    Method superMethod = class_getInstanceMethod(class_getSuperclass(object_getClass(self)), selector);
 
-    class_replaceMethod([self class],
+    class_replaceMethod(object_getClass(self),
                         selector,
                         method_getImplementation(superMethod),
                         method_getTypeEncoding(superMethod));
@@ -62,20 +62,20 @@ static void SBRemoveStub(__unsafe_unretained id self, SEL cmd, SEL selector) {
 
 + (id<SBStub>)stubObject:(NSObject *)object
 {
-    if ([Stubbilino.stubClasses containsObject:object.class]) {
+    if ([Stubbilino.stubClasses containsObject:object_getClass(object)]) {
         return (id<SBStub>)object;
     }
 
-    NSString *name = [Stubbilino nameOfStub:object.class];
+    NSString *name = [Stubbilino nameOfStub:object_getClass(object)];
 
-    Class stubClass = objc_allocateClassPair(object.class, name.UTF8String, 0);
+    Class stubClass = objc_allocateClassPair(object_getClass(object), name.UTF8String, 0);
 
     class_addMethod(stubClass, @selector(stubMethod:withBlock:), (IMP)&SBStubMethodWithBlock, "v@::@");
     class_addMethod(stubClass, @selector(removeStub:), (IMP)&SBRemoveStub, "v@::");
 
     SEL deallocSelector = sel_registerName("dealloc");
 
-    Method deallocMethod = class_getInstanceMethod(object.class, deallocSelector);
+    Method deallocMethod = class_getInstanceMethod(object_getClass(object), deallocSelector);
     void (*originalDealloc)(id, SEL) = (__typeof__(originalDealloc))method_getImplementation(deallocMethod);
 
     id newDealloc = ^(__unsafe_unretained id self) {
@@ -102,7 +102,7 @@ static void SBRemoveStub(__unsafe_unretained id self, SEL cmd, SEL selector) {
 
 + (id)unstubObject:(NSObject<SBStub> *)object
 {
-    if (![Stubbilino.stubClasses containsObject:object.class]) {
+    if (![Stubbilino.stubClasses containsObject:object_getClass(object)]) {
         return (id<SBStub>)object;
     }
 
