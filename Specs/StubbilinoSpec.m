@@ -28,28 +28,7 @@
 
 SpecBegin(Stubbilino)
 
-describe(@"Stubbilino", ^{
-    it(@"Returns a stubbed object", ^{
-        id<SBStub> stub = [Stubbilino stubObject:[[NSObject alloc] init]];
-
-        expect(stub).toNot.beNil();
-    });
-
-    it(@"can remove all stubs", ^{
-        id<SBStub> stub1 = [Stubbilino stubObject:[[NSObject alloc] init]];
-        id<SBStub> stub2 = [Stubbilino stubObject:[[NSObject alloc] init]];
-
-        expect(stub1.class).toNot.beIdenticalTo(NSObject.class);
-        expect(stub2.class).toNot.beIdenticalTo(NSObject.class);
-
-        [Stubbilino removeAllStubs];
-
-        expect(stub1.class).to.beIdenticalTo(NSObject.class);
-        expect(stub2.class).to.beIdenticalTo(NSObject.class);
-    });
-});
-
-describe(@"A stubbed object", ^{
+describe(@"A stub", ^{
     __block SBTestObject *originalObject;
     __block SBTestObject<SBStub> *stubbedObject;
 
@@ -58,15 +37,15 @@ describe(@"A stubbed object", ^{
         stubbedObject = [Stubbilino stubObject:originalObject];
     });
 
-    it(@"is identical to the original object", ^{
+    it(@"should be identical to the original object", ^{
         expect(stubbedObject).to.beIdenticalTo(originalObject);
     });
 
-    it(@"has a stub class as its class", ^{
+    it(@"should have a stub class as its class", ^{
         expect(stubbedObject.class).toNot.equal(SBTestObject.class);
     });
 
-    it(@"stays a subclass of its original class", ^{
+    it(@"should remain a subclass of its original class", ^{
         expect(stubbedObject).to.beKindOf(SBTestObject.class);
     });
 
@@ -77,11 +56,33 @@ describe(@"A stubbed object", ^{
 
         expect(doubleStubbed.class).to.beIdenticalTo(stubbedClass);
     });
+});
 
-    it(@"can be unstubbed", ^{
-        SBTestObject *formerStub = [Stubbilino unstubObject:stubbedObject];
+describe(@"Removing stubs", ^{
+    __block id<SBStub> stub1;
+    __block id<SBStub> stub2;
 
-        expect(formerStub.class).to.equal(SBTestObject.class);
+    beforeEach(^{
+        stub1 = [Stubbilino stubObject:[[NSObject alloc] init]];
+        stub2 = [Stubbilino stubObject:[[NSObject alloc] init]];
+    });
+
+    describe(@"individually", ^{
+        it(@"should restore the original class", ^{
+            [Stubbilino unstubObject:stub1];
+
+            expect(stub1.class).to.beIdenticalTo(NSObject.class);
+            expect(stub2.class).toNot.beIdenticalTo(NSObject.class);
+        });
+    });
+
+    describe(@"all at once", ^{
+        it(@"should restore the original class of all stubs", ^{
+            [Stubbilino removeAllStubs];
+
+            expect(stub1.class).to.beIdenticalTo(NSObject.class);
+            expect(stub2.class).to.beIdenticalTo(NSObject.class);
+        });
     });
 });
 
@@ -92,21 +93,21 @@ describe(@"Instance method stubs", ^{
         stubbedObject = [Stubbilino stubObject:[[SBTestObject alloc] init]];
     });
 
-    it(@"raise an exception if the stubbed object does not respond to the selector", ^{
+    it(@"should raise an exception if the stubbed object does not respond to the selector", ^{
         expect(^{
             [stubbedObject stubMethod:@selector(notImplemented)
                             withBlock:^{ return @"Stubbed"; }];
         }).to.raise(NSInvalidArgumentException);
     });
 
-    it(@"invoke the stub block", ^{
+    it(@"should invoke the stub block", ^{
         [stubbedObject stubMethod:@selector(instanceMethod)
                         withBlock:^{ return @"Stubbed"; }];
 
         expect(stubbedObject.instanceMethod).to.equal(@"Stubbed");
     });
 
-    it(@"can access object arguments", ^{
+    it(@"should access object arguments", ^{
         [stubbedObject stubMethod:@selector(instanceMethodWithObjectArgument:)
                         withBlock:^(id self, NSString *string){
                             return [[string substringFromIndex:4] capitalizedString];
@@ -115,7 +116,7 @@ describe(@"Instance method stubs", ^{
         expect([stubbedObject instanceMethodWithObjectArgument:@"Not stubbed"]).to.equal(@"Stubbed");
     });
 
-    it(@"can access primitive arguments", ^{
+    it(@"should access primitive arguments", ^{
         [stubbedObject stubMethod:@selector(instanceMethodWithPrimitiveArgument:)
                         withBlock:^(id self, char arg){
                             return arg + 1;
@@ -124,25 +125,29 @@ describe(@"Instance method stubs", ^{
         expect([stubbedObject instanceMethodWithPrimitiveArgument:2]).to.equal(3);
     });
 
-    it(@"can be removed individually", ^{
-        [stubbedObject stubMethod:@selector(instanceMethod)
-                        withBlock:^{ return @"Stubbed"; }];
+    describe(@"when removed individually", ^{
+        it(@"should not be invoked", ^{
+            [stubbedObject stubMethod:@selector(instanceMethod)
+                            withBlock:^{ return @"Stubbed"; }];
 
-        [stubbedObject removeStub:@selector(instanceMethod)];
+            [stubbedObject removeStub:@selector(instanceMethod)];
 
-        expect(stubbedObject.instanceMethod).to.equal(@"Not stubbed");
+            expect(stubbedObject.instanceMethod).to.equal(@"Not stubbed");
+        });
     });
 
-    it(@"can be removed by unstubbing the object", ^{
-        [stubbedObject stubMethod:@selector(instanceMethod)
-                        withBlock:^{ return @"Stubbed"; }];
+    describe(@"when the object is unstubbed", ^{
+        it(@"should not be invoked", ^{
+            [stubbedObject stubMethod:@selector(instanceMethod)
+                            withBlock:^{ return @"Stubbed"; }];
 
-        [Stubbilino unstubObject:stubbedObject];
+            [Stubbilino unstubObject:stubbedObject];
 
-        expect(stubbedObject.instanceMethod).to.equal(@"Not stubbed");
+            expect(stubbedObject.instanceMethod).to.equal(@"Not stubbed");
+        });
     });
 
-    it(@"do not affect other objects", ^{
+    it(@"should not affect other objects", ^{
         SBTestObject *otherObject = [[SBTestObject alloc] init];
 
         [stubbedObject stubMethod:@selector(instanceMethod)
@@ -151,14 +156,14 @@ describe(@"Instance method stubs", ^{
         expect(otherObject.instanceMethod).toNot.equal(@"Stubbed");
     });
 
-    it(@"do not affect other methods", ^{
+    it(@"should not affect other methods", ^{
         [stubbedObject stubMethod:@selector(instanceMethod)
                         withBlock:^{ return @"Stubbed"; }];
 
         expect([stubbedObject instanceMethodWithObjectArgument:@"Not stubbed"]).to.equal(@"Not stubbed");
     });
 
-    it(@"do not affect other stubs", ^{
+    it(@"should not affect other stubs", ^{
         SBTestObject<SBStub> *otherObject = [Stubbilino stubObject:[[SBTestObject alloc] init]];
 
         [otherObject stubMethod:@selector(instanceMethod)
@@ -183,21 +188,21 @@ describe(@"Class method stubs", ^{
         [Stubbilino unstubClass:SBTestObject.class];
     });
 
-    it(@"raise an exception if the stubbed class does not respond to the selector", ^{
+    it(@"should raise an exception if the stubbed class does not respond to the selector", ^{
         expect(^{
             [stubbedClass stubMethod:@selector(notImplemented)
                            withBlock:^{ return @"Stubbed"; }];
         }).to.raise(NSInvalidArgumentException);
     });
 
-    it(@"invoke the stub block", ^{
+    it(@"should invoke the stub block", ^{
         [stubbedClass stubMethod:@selector(classMethod)
                        withBlock:^{ return @"Stubbed"; }];
 
         expect(SBTestObject.classMethod).to.equal(@"Stubbed");
     });
 
-    it(@"can access object arguments", ^{
+    it(@"should access object arguments", ^{
         [stubbedClass stubMethod:@selector(classMethodWithObjectArgument:)
                        withBlock:^(id self, NSString *string){
                            return [[string substringFromIndex:4] capitalizedString];
@@ -206,7 +211,7 @@ describe(@"Class method stubs", ^{
         expect([SBTestObject classMethodWithObjectArgument:@"Not stubbed"]).to.equal(@"Stubbed");
     });
 
-    it(@"can access primitive arguments", ^{
+    it(@"should access primitive arguments", ^{
         [stubbedClass stubMethod:@selector(classMethodWithPrimitiveArgument:)
                        withBlock:^(id self, char arg){
                            return arg + 1;
@@ -215,25 +220,29 @@ describe(@"Class method stubs", ^{
         expect([SBTestObject classMethodWithPrimitiveArgument:2]).to.equal(3);
     });
 
-    it(@"can be removed individually", ^{
-        [stubbedClass stubMethod:@selector(classMethod)
-                       withBlock:^{ return @"Stubbed"; }];
+    describe(@"when removed individually", ^{
+        it(@"should not be invoked", ^{
+            [stubbedClass stubMethod:@selector(classMethod)
+                           withBlock:^{ return @"Stubbed"; }];
 
-        [stubbedClass removeStub:@selector(classMethod)];
+            [stubbedClass removeStub:@selector(classMethod)];
 
-        expect(SBTestObject.classMethod).to.equal(@"Not stubbed");
+            expect(SBTestObject.classMethod).to.equal(@"Not stubbed");
+        });
     });
 
-    it(@"can be removed by unstubbing the class", ^{
-        [stubbedClass stubMethod:@selector(classMethod)
-                       withBlock:^{ return @"Stubbed"; }];
+    describe(@"when the class is unstubbed", ^{
+        it(@"should not be invoked", ^{
+            [stubbedClass stubMethod:@selector(classMethod)
+                           withBlock:^{ return @"Stubbed"; }];
 
-        [Stubbilino unstubClass:stubbedClass];
+            [Stubbilino unstubClass:stubbedClass];
 
-        expect(SBTestObject.classMethod).to.equal(@"Not stubbed");
+            expect(SBTestObject.classMethod).to.equal(@"Not stubbed");
+        });
     });
 
-    it(@"do not affect other classes", ^{
+    it(@"should not affect other classes", ^{
         Class otherClass = [NSObject class];
 
         [stubbedClass stubMethod:@selector(description)
@@ -242,14 +251,14 @@ describe(@"Class method stubs", ^{
         expect([otherClass description]).toNot.equal(@"Stubbed");
     });
 
-    it(@"do not affect other methods", ^{
+    it(@"should not affect other methods", ^{
         [stubbedClass stubMethod:@selector(classMethod)
                        withBlock:^{ return @"Stubbed"; }];
 
         expect([SBTestObject classMethodWithObjectArgument:@"Not stubbed"]).to.equal(@"Not stubbed");
     });
 
-    it(@"do not affect other stubs", ^{
+    it(@"should not affect other stubs", ^{
         Class<SBClassStub> otherClass = [Stubbilino stubClass:NSObject.class];
 
         [otherClass stubMethod:@selector(description)
