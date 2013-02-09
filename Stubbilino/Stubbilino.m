@@ -30,7 +30,7 @@
 
 + (NSString *)nameOfStub:(Class)class;
 
-+ (NSMutableSet *)stubClasses;
++ (CFMutableSetRef)stubbedObjects;
 
 @end
 
@@ -62,7 +62,7 @@ static void SBRemoveStub(__unsafe_unretained id self, SEL cmd, SEL selector) {
 
 + (id<SBStub>)stubObject:(NSObject *)object
 {
-    if ([Stubbilino.stubClasses containsObject:object_getClass(object)]) {
+    if (CFSetContainsValue(Stubbilino.stubbedObjects, (__bridge const void *)object)) {
         return (id<SBStub>)object;
     }
 
@@ -84,7 +84,7 @@ static void SBRemoveStub(__unsafe_unretained id self, SEL cmd, SEL selector) {
 
         object_setClass(self, originalClass);
 
-        [Stubbilino.stubClasses removeObject:stubClass];
+        CFSetRemoveValue(Stubbilino.stubbedObjects, (__bridge const void *)self);
 
         objc_disposeClassPair(stubClass);
 
@@ -95,14 +95,14 @@ static void SBRemoveStub(__unsafe_unretained id self, SEL cmd, SEL selector) {
 
     object_setClass(object, stubClass);
 
-    [Stubbilino.stubClasses addObject:stubClass];
+    CFSetAddValue(Stubbilino.stubbedObjects, (__bridge const void *)object);
 
     return (id<SBStub>)object;
 }
 
 + (id)unstubObject:(NSObject<SBStub> *)object
 {
-    if (![Stubbilino.stubClasses containsObject:object_getClass(object)]) {
+    if (!CFSetContainsValue(Stubbilino.stubbedObjects, (__bridge const void *)object)) {
         return (id<SBStub>)object;
     }
 
@@ -111,7 +111,7 @@ static void SBRemoveStub(__unsafe_unretained id self, SEL cmd, SEL selector) {
 
     object_setClass(object, originalClass);
 
-    [Stubbilino.stubClasses removeObject:stubClass];
+    CFSetRemoveValue(Stubbilino.stubbedObjects, (__bridge const void *)object);
 
     objc_disposeClassPair(stubClass);
 
@@ -135,14 +135,16 @@ static void SBRemoveStub(__unsafe_unretained id self, SEL cmd, SEL selector) {
     return [NSString stringWithFormat:@"SBStubOf%@", NSStringFromClass(class)];
 }
 
-+ (NSMutableSet *)stubClasses
++ (CFMutableSetRef)stubbedObjects
 {
-    static NSMutableSet *stubClasses;
+    static CFMutableSetRef stubbedObjects;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        stubClasses = [[NSMutableSet alloc] init];
+        CFSetCallBacks callbacks = {0, NULL, NULL, CFCopyDescription, CFEqual, CFHash};
+
+        stubbedObjects = CFSetCreateMutable(NULL, 0, &callbacks);
     });
-    return stubClasses;
+    return stubbedObjects;
 }
 
 @end
