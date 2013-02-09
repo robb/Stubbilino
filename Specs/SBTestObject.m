@@ -26,32 +26,32 @@
 
 @implementation SBTestObject
 
-+ (NSString *)classMethod
++ (NSString *)method
 {
     return @"Not stubbed";
 }
 
-+ (NSString *)classMethodWithObjectArgument:(NSString *)argument
++ (NSString *)methodWithObjectArgument:(NSString *)argument
 {
     return @"Not stubbed";
 }
 
-+ (char)classMethodWithPrimitiveArgument:(char)argument
++ (char)methodWithPrimitiveArgument:(char)argument
 {
     return 0;
 }
 
-- (NSString *)instanceMethod
+- (NSString *)method
 {
     return @"Not stubbed";
 }
 
-- (NSString *)instanceMethodWithObjectArgument:(NSString *)argument
+- (NSString *)methodWithObjectArgument:(NSString *)argument
 {
     return @"Not stubbed";
 }
 
-- (char)instanceMethodWithPrimitiveArgument:(char)argument
+- (char)methodWithPrimitiveArgument:(char)argument
 {
     return 0;
 }
