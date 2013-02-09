@@ -35,4 +35,6 @@
 + (Class<SBClassStub>)stubClass:(Class)class;
 + (Class)unstubClass:(Class<SBClassStub>)class;
 
++ (void)removeAllStubs;
+
 @end

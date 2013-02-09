@@ -57,6 +57,14 @@ static void SBRemoveStub(__unsafe_unretained id self, SEL cmd, SEL selector) {
                         method_getTypeEncoding(superMethod));
 }
 
+static void SBRemoveStubClass(id object, void *context) {
+    Class stubClass = object_getClass(object);
+    Class originalClass = class_getSuperclass(stubClass);
+
+    object_setClass(object, originalClass);
+
+    objc_disposeClassPair(stubClass);
+}
 
 @implementation Stubbilino
 
@@ -79,14 +87,9 @@ static void SBRemoveStub(__unsafe_unretained id self, SEL cmd, SEL selector) {
     void (*originalDealloc)(id, SEL) = (__typeof__(originalDealloc))method_getImplementation(deallocMethod);
 
     id newDealloc = ^(__unsafe_unretained id self) {
-        Class stubClass = object_getClass(self);
-        Class originalClass = class_getSuperclass(stubClass);
-
-        object_setClass(self, originalClass);
+        SBRemoveStubClass(self, NULL);
 
         CFSetRemoveValue(Stubbilino.stubbedObjects, (__bridge const void *)self);
-
-        objc_disposeClassPair(stubClass);
 
         originalDealloc(self, deallocSelector);
     };
@@ -106,14 +109,9 @@ static void SBRemoveStub(__unsafe_unretained id self, SEL cmd, SEL selector) {
         return (id<SBStub>)object;
     }
 
-    Class stubClass = object_getClass(object);
-    Class originalClass = class_getSuperclass(stubClass);
-
-    object_setClass(object, originalClass);
+    SBRemoveStubClass(object, NULL);
 
     CFSetRemoveValue(Stubbilino.stubbedObjects, (__bridge const void *)object);
-
-    objc_disposeClassPair(stubClass);
 
     return object;
 }
@@ -126,6 +124,12 @@ static void SBRemoveStub(__unsafe_unretained id self, SEL cmd, SEL selector) {
 + (Class)unstubClass:(Class<SBStub>)class
 {
     return (Class)[self unstubObject:(id)class];
+}
+
++ (void)removeAllStubs
+{
+    CFSetApplyFunction(Stubbilino.stubbedObjects, (CFSetApplierFunction)&SBRemoveStubClass, NULL);
+    CFSetRemoveAllValues(Stubbilino.stubbedObjects);
 }
 
 #pragma mark - Private

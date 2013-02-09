@@ -34,6 +34,19 @@ describe(@"Stubbilino", ^{
 
         expect(stub).toNot.beNil();
     });
+
+    it(@"can remove all stubs", ^{
+        id<SBStub> stub1 = [Stubbilino stubObject:[[NSObject alloc] init]];
+        id<SBStub> stub2 = [Stubbilino stubObject:[[NSObject alloc] init]];
+
+        expect(stub1.class).toNot.beIdenticalTo(NSObject.class);
+        expect(stub2.class).toNot.beIdenticalTo(NSObject.class);
+
+        [Stubbilino removeAllStubs];
+
+        expect(stub1.class).to.beIdenticalTo(NSObject.class);
+        expect(stub2.class).to.beIdenticalTo(NSObject.class);
+    });
 });
 
 describe(@"A stubbed object", ^{
