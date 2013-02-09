@@ -23,6 +23,7 @@
 //  IN THE SOFTWARE.
 
 #import "Stubbilino.h"
+#import "Stubbilino+Private.h"
 
 #import "SBTestObject.h"
 
@@ -35,6 +36,11 @@ describe(@"A stub", ^{
     beforeEach(^{
         originalObject = [[SBTestObject alloc] init];
         stubbedObject = [Stubbilino stubObject:originalObject];
+    });
+
+    afterEach(^{
+        originalObject = nil;
+        stubbedObject = nil;
     });
 
     it(@"should be identical to the original object", ^{
@@ -52,9 +58,23 @@ describe(@"A stub", ^{
     it(@"cannot be stubbed twice", ^{
         Class stubbedClass = stubbedObject.class;
 
-        SBTestObject<SBStub> *doubleStubbed = [Stubbilino stubObject:stubbedObject];
+        __weak SBTestObject<SBStub> *doubleStubbed = [Stubbilino stubObject:stubbedObject];
 
         expect(doubleStubbed.class).to.beIdenticalTo(stubbedClass);
+    });
+});
+
+describe(@"Deallocating a stub", ^{
+    it(@"should dispose of the stub class", ^{
+        @autoreleasepool {
+            id stub = [Stubbilino stubObject:[[NSObject alloc] init]];
+
+            expect((NSSet *)Stubbilino.stubbedObjects).to.haveCountOf(1);
+
+            stub = nil;
+        }
+
+        expect((NSSet *)Stubbilino.stubbedObjects).to.haveCountOf(0);
     });
 });
 
@@ -84,14 +104,25 @@ describe(@"Removing stubs", ^{
             expect(stub2.class).to.beIdenticalTo(NSObject.class);
         });
     });
+
+    it(@"should have no effect on objects that aren't stubs", ^{
+        expect(^{
+            [Stubbilino unstubObject:stub1];
+            [Stubbilino unstubObject:stub1];
+        }).toNot.raise(nil);
+    });
 });
 
 static NSString * const SBStubSetupBlock = @"SBStubSetupBlock";
 static NSString * const SBOtherSetupBlock = @"SBOtherSetupBlock";
 
+static NSString * const SBUnstubBlock = @"SBUnstubBlock";
+
 sharedExamplesFor(@"Method stubs", ^(NSDictionary *data) {
     __block id stub;
     __block id otherStub;
+
+    __block id (^unstub)(id);
 
     beforeEach(^{
         id<SBStub> (^stubSetup)() = data[SBStubSetupBlock];
@@ -99,6 +130,8 @@ sharedExamplesFor(@"Method stubs", ^(NSDictionary *data) {
 
         id<SBStub> (^otherSetup)() = data[SBOtherSetupBlock];
         otherStub = otherSetup();
+
+        unstub = data[SBUnstubBlock];
     });
 
     afterEach(^{
@@ -153,7 +186,7 @@ sharedExamplesFor(@"Method stubs", ^(NSDictionary *data) {
             [stub stubMethod:@selector(method)
                    withBlock:^{ return @"Stubbed"; }];
 
-            [Stubbilino unstubObject:stub];
+            unstub(stub);
 
             expect([stub method]).to.equal(@"Not stubbed");
         });
@@ -188,14 +221,21 @@ sharedExamplesFor(@"Method stubs", ^(NSDictionary *data) {
 describe(@"Instance method stubs", ^{
     itShouldBehaveLike(@"Method stubs", @{
         SBStubSetupBlock:  ^{ return [Stubbilino stubObject:[[SBTestObject alloc] init]]; },
-        SBOtherSetupBlock: ^{ return [Stubbilino stubObject:[[SBTestObject alloc] init]]; }
+        SBOtherSetupBlock: ^{ return [Stubbilino stubObject:[[SBTestObject alloc] init]]; },
+        SBUnstubBlock: ^(id<SBStub> stub) {
+            return [Stubbilino unstubObject:stub];
+        }
     });
 });
 
 describe(@"Class method stubs", ^{
     itShouldBehaveLike(@"Method stubs", @{
         SBStubSetupBlock:  ^{ return [Stubbilino stubClass:SBTestObject.class]; },
-        SBOtherSetupBlock: ^{ return [Stubbilino stubClass:NSObject.class]; }
+        SBOtherSetupBlock: ^{ return [Stubbilino stubClass:NSObject.class]; },
+
+        SBUnstubBlock: ^(Class<SBClassStub> class) {
+            return [Stubbilino unstubClass:class];
+        }
     });
 });
 

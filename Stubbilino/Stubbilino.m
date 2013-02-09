@@ -25,14 +25,7 @@
 #import <objc/runtime.h>
 
 #import "Stubbilino.h"
-
-@interface Stubbilino ()
-
-+ (NSString *)nameOfStub:(Class)class;
-
-+ (CFMutableSetRef)stubbedObjects;
-
-@end
+#import "Stubbilino+Private.h"
 
 static void SBStubMethodWithBlock(__unsafe_unretained id self, SEL cmd, SEL selector, id block) {
     if (![self respondsToSelector:selector]) {

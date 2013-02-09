@@ -57,6 +57,7 @@
 		54BE761D16BD80900037DC25 /* StubbilinoSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StubbilinoSpec.m; sourceTree = "<group>"; };
 		54BE762E16BD85F30037DC25 /* Specs-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Specs-Prefix.pch"; sourceTree = "<group>"; };
 		54BE762F16BD86DA0037DC25 /* SBStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBStub.h; sourceTree = "<group>"; };
+		54D7850416C6953600C1DDFC /* Stubbilino+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Stubbilino+Private.h"; sourceTree = "<group>"; };
 		54E4B55816BE81DB006F6B76 /* SBTestObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBTestObject.h; sourceTree = "<group>"; };
 		54E4B55916BE81DB006F6B76 /* SBTestObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBTestObject.m; sourceTree = "<group>"; };
 		54E5948A16BFFD86009A0594 /* SBClassStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBClassStub.h; sourceTree = "<group>"; };
@@ -123,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				54BE760416BD80900037DC25 /* Stubbilino.h */,
+				54D7850416C6953600C1DDFC /* Stubbilino+Private.h */,
 				54BE760616BD80900037DC25 /* Stubbilino.m */,
 				54BE762F16BD86DA0037DC25 /* SBStub.h */,
 				54E5948A16BFFD86009A0594 /* SBClassStub.h */,
