@@ -137,9 +137,7 @@ static void SBRemoveStubClass(id object, void *context) {
     static CFMutableSetRef stubbedObjects;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        CFSetCallBacks callbacks = {0, NULL, NULL, CFCopyDescription, CFEqual, CFHash};
-
-        stubbedObjects = CFSetCreateMutable(NULL, 0, &callbacks);
+        stubbedObjects = CFSetCreateMutable(NULL, 0, NULL);
     });
     return stubbedObjects;
 }
