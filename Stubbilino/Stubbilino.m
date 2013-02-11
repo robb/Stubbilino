@@ -79,12 +79,12 @@ static void SBRemoveStubClass(id object, void *context) {
     Method deallocMethod = class_getInstanceMethod(object_getClass(object), deallocSelector);
     void (*originalDealloc)(id, SEL) = (__typeof__(originalDealloc))method_getImplementation(deallocMethod);
 
-    id newDealloc = ^(__unsafe_unretained id self) {
-        SBRemoveStubClass(self, NULL);
+    id newDealloc = ^(__unsafe_unretained id obj) {
+        SBRemoveStubClass(obj, NULL);
 
-        CFSetRemoveValue(Stubbilino.stubbedObjects, (__bridge const void *)self);
+        CFSetRemoveValue(Stubbilino.stubbedObjects, (__bridge const void *)obj);
 
-        originalDealloc(self, deallocSelector);
+        originalDealloc(obj, deallocSelector);
     };
 
     class_addMethod(stubClass, deallocSelector, imp_implementationWithBlock(newDealloc), "v@:");
