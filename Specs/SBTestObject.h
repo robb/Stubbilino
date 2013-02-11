@@ -30,6 +30,7 @@
 + (NSString *)methodWithObjectArgument:(NSString *)argument;
 + (char)methodWithPrimitiveArgument:(char)argument;
 
+- (id)initWithValue:(NSValue *)value;
 - (NSString *)method;
 - (NSString *)methodWithObjectArgument:(NSString *)argument;
 - (char)methodWithPrimitiveArgument:(char)argument;

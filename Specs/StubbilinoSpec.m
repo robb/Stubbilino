@@ -55,6 +55,15 @@ describe(@"A stub", ^{
         expect(stubbedObject).to.beKindOf(SBTestObject.class);
     });
 
+    it(@"should not put side effects on other stubbed objects", ^{
+        SBTestObject *otherObject = [[SBTestObject alloc] init];
+        SBTestObject<SBStub> *stubbedOtherObject = [Stubbilino stubObject:otherObject];
+        expect(stubbedOtherObject.class).toNot.equal(SBTestObject.class);
+
+        [Stubbilino unstubObject:stubbedOtherObject];
+        expect(stubbedOtherObject.class).to.equal(SBTestObject.class);
+    });
+
     it(@"cannot be stubbed twice", ^{
         Class stubbedClass = stubbedObject.class;
 
@@ -83,16 +92,16 @@ describe(@"Removing stubs", ^{
     __block id<SBStub> stub2;
 
     beforeEach(^{
-        stub1 = [Stubbilino stubObject:[[NSObject alloc] init]];
-        stub2 = [Stubbilino stubObject:[[NSObject alloc] init]];
+        stub1 = [Stubbilino stubObject:[[SBTestObject alloc] init]];
+        stub2 = [Stubbilino stubObject:[[SBTestObject alloc] init]];
     });
 
     describe(@"individually", ^{
         it(@"should restore the original class", ^{
             [Stubbilino unstubObject:stub1];
 
-            expect(stub1.class).to.beIdenticalTo(NSObject.class);
-            expect(stub2.class).toNot.beIdenticalTo(NSObject.class);
+            expect(stub1.class).to.beIdenticalTo(SBTestObject.class);
+            expect(stub2.class).toNot.beIdenticalTo(SBTestObject.class);
         });
     });
 
@@ -100,8 +109,8 @@ describe(@"Removing stubs", ^{
         it(@"should restore the original class of all stubs", ^{
             [Stubbilino removeAllStubs];
 
-            expect(stub1.class).to.beIdenticalTo(NSObject.class);
-            expect(stub2.class).to.beIdenticalTo(NSObject.class);
+            expect(stub1.class).to.beIdenticalTo(SBTestObject.class);
+            expect(stub2.class).to.beIdenticalTo(SBTestObject.class);
         });
     });
 
