@@ -154,7 +154,7 @@ sharedExamplesFor(@"Method stubs", ^(NSDictionary *data) {
 
     it(@"should access object arguments", ^{
         [stub stubMethod:@selector(methodWithObjectArgument:)
-               withBlock:^(id self, NSString *string){
+               withBlock:^(id obj, NSString *string){
                    return [[string substringFromIndex:4] capitalizedString];
                }];
 
@@ -163,7 +163,7 @@ sharedExamplesFor(@"Method stubs", ^(NSDictionary *data) {
 
     it(@"should access primitive arguments", ^{
         [stub stubMethod:@selector(methodWithPrimitiveArgument:)
-               withBlock:^(id self, char arg){
+               withBlock:^(id obj, char arg){
                    return arg + 1;
                }];
 
