@@ -51,7 +51,7 @@
 		54BE760616BD80900037DC25 /* Stubbilino.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Stubbilino.m; sourceTree = "<group>"; };
 		54BE760D16BD80900037DC25 /* Specs.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Specs.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		54BE760E16BD80900037DC25 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		54BE761016BD80900037DC25 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		54BE761016BD80900037DC25 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		54BE761816BD80900037DC25 /* Specs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Specs-Info.plist"; sourceTree = "<group>"; };
 		54BE761A16BD80900037DC25 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		54BE761D16BD80900037DC25 /* StubbilinoSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StubbilinoSpec.m; sourceTree = "<group>"; };
