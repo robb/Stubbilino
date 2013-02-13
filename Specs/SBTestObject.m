@@ -25,6 +25,9 @@
 #import "SBTestObject.h"
 
 @implementation SBTestObject
+{
+	NSValue *_value;
+}
 
 + (NSString *)method
 {
@@ -41,6 +44,15 @@
     return 0;
 }
 
+- (id)initWithValue:(NSValue *)value
+{
+	self = [self init];
+	if (self != nil) {
+		_value = value;
+	}
+	return self;
+}
+
 - (NSString *)method
 {
     return @"Not stubbed";
@@ -54,6 +66,22 @@
 - (char)methodWithPrimitiveArgument:(char)argument
 {
     return 0;
+}
+
+- (BOOL)isEqual:(id)object
+{
+	if (object == self)
+		return YES;
+	if (! [object isKindOfClass:[SBTestObject class]])
+		return NO;
+	if (((typeof(self))object)->_value == _value)
+		return YES;
+	return [((typeof(self))object)->_value isEqual:_value];
+}
+
+- (NSUInteger)hash
+{
+	return [_value hash];
 }
 
 @end
