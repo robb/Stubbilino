@@ -24,10 +24,13 @@
 
 #import "SBTestObject.h"
 
+@interface SBTestObject ()
+
+@property (readonly, strong) NSValue *value;
+
+@end
+
 @implementation SBTestObject
-{
-	NSValue *_value;
-}
 
 + (NSString *)method
 {
@@ -46,11 +49,11 @@
 
 - (id)initWithValue:(NSValue *)value
 {
-	self = [self init];
-	if (self != nil) {
-		_value = value;
-	}
-	return self;
+    self = [self init];
+    if (self != nil) {
+        _value = value;
+    }
+    return self;
 }
 
 - (NSString *)method
@@ -70,18 +73,25 @@
 
 - (BOOL)isEqual:(id)object
 {
-	if (object == self)
-		return YES;
-	if (! [object isKindOfClass:[SBTestObject class]])
-		return NO;
-	if (((typeof(self))object)->_value == _value)
-		return YES;
-	return [((typeof(self))object)->_value isEqual:_value];
+    if (object == self) {
+        return YES;
+    }
+
+    if (! [object isKindOfClass:[SBTestObject class]]) {
+        return NO;
+    }
+
+    SBTestObject *other = object;
+    if (self.value == other.value) {
+        return YES;
+    }
+
+    return [other.value isEqual:self.value];
 }
 
 - (NSUInteger)hash
 {
-	return [_value hash];
+    return self.value.hash;
 }
 
 @end
