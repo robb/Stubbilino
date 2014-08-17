@@ -26,6 +26,8 @@
 
 @interface SBTestObject : NSObject
 
+@property (strong) id testProperty;
+
 + (NSString *)method;
 + (NSString *)methodWithObjectArgument:(NSString *)argument;
 + (char)methodWithPrimitiveArgument:(char)argument;
