@@ -67,16 +67,22 @@ static void SBRemoveStubClass(id object, void *context) {
         return (id<SBStub>)object;
     }
 
-    NSString *name = [Stubbilino nameOfStub:object_getClass(object)];
+    Class class;
+    if (class_isMetaClass(object_getClass(object))) {
+        class = object_getClass(object);
+    } else {
+        class = [object class];
+    }
+    NSString *name = [Stubbilino nameOfStub:class];
 
-    Class stubClass = objc_allocateClassPair(object_getClass(object), name.UTF8String, 0);
+    Class stubClass = objc_allocateClassPair(class, name.UTF8String, 0);
 
     class_addMethod(stubClass, @selector(stubMethod:withBlock:), (IMP)&SBStubMethodWithBlock, "v@::@");
     class_addMethod(stubClass, @selector(removeStub:), (IMP)&SBRemoveStub, "v@::");
 
     SEL deallocSelector = sel_registerName("dealloc");
 
-    Method deallocMethod = class_getInstanceMethod(object_getClass(object), deallocSelector);
+    Method deallocMethod = class_getInstanceMethod(class, deallocSelector);
     void (*originalDealloc)(id, SEL) = (__typeof__(originalDealloc))method_getImplementation(deallocMethod);
 
     id newDealloc = ^(__unsafe_unretained id obj) {

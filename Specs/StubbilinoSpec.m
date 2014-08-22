@@ -248,4 +248,28 @@ describe(@"Class method stubs", ^{
     });
 });
 
+describe(@"Key-value observed object", ^{
+    __block SBTestObject *object = nil;
+
+    before(^{
+        object = [[SBTestObject alloc] init];
+    });
+
+    it(@"should stub KVO object", ^{
+        [object addObserver:object
+                 forKeyPath:@"testProperty"
+                    options:NSKeyValueObservingOptionNew
+                    context:NULL];
+
+        id <SBStub> stub = [Stubbilino stubObject:object];
+        expect(^{
+            [stub stubMethod:@selector(method) withBlock:^{
+                return @"Test";
+            }];
+        }).notTo.raise(NSInvalidArgumentException);
+
+        expect([object method]).to.equal(@"Test");
+    });
+});
+
 SpecEnd
