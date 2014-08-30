@@ -14,6 +14,8 @@
 		49363D4D19A5FE5F0054348E /* StubbilinoSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 54BE761D16BD80900037DC25 /* StubbilinoSpec.m */; };
 		49363D4E19A5FE610054348E /* SBTestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 54E4B55916BE81DB006F6B76 /* SBTestObject.m */; };
 		49B0456C19A5FF4E009DB4DC /* libStubbilino.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54BE75FC16BD80900037DC25 /* libStubbilino.a */; };
+		49C37D2619B207D600ED94F3 /* TestModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 49C37D2419B207D600ED94F3 /* TestModel.xcdatamodeld */; };
+		49C37D2919B2095A00ED94F3 /* TestEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 49C37D2819B2095A00ED94F3 /* TestEntity.m */; };
 		54BE760016BD80900037DC25 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54BE75FF16BD80900037DC25 /* Foundation.framework */; };
 		54BE760516BD80900037DC25 /* Stubbilino.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 54BE760416BD80900037DC25 /* Stubbilino.h */; };
 		54BE760716BD80900037DC25 /* Stubbilino.m in Sources */ = {isa = PBXBuildFile; fileRef = 54BE760616BD80900037DC25 /* Stubbilino.m */; };
@@ -45,6 +47,9 @@
 /* Begin PBXFileReference section */
 		49363D3519A5FD920054348E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		49363D3B19A5FE560054348E /* Specs.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Specs.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		49C37D2519B207D600ED94F3 /* TestModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TestModel.xcdatamodel; sourceTree = "<group>"; };
+		49C37D2719B2095A00ED94F3 /* TestEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestEntity.h; sourceTree = "<group>"; };
+		49C37D2819B2095A00ED94F3 /* TestEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestEntity.m; sourceTree = "<group>"; };
 		54BE75FC16BD80900037DC25 /* libStubbilino.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libStubbilino.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		54BE75FF16BD80900037DC25 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		54BE760316BD80900037DC25 /* Stubbilino-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Stubbilino-Prefix.pch"; sourceTree = "<group>"; };
@@ -53,7 +58,7 @@
 		54BE761016BD80900037DC25 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		54BE761816BD80900037DC25 /* Specs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Specs-Info.plist"; sourceTree = "<group>"; };
 		54BE761A16BD80900037DC25 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		54BE761D16BD80900037DC25 /* StubbilinoSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StubbilinoSpec.m; sourceTree = "<group>"; };
+		54BE761D16BD80900037DC25 /* StubbilinoSpec.m */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = StubbilinoSpec.m; sourceTree = "<group>"; tabWidth = 4; };
 		54BE762E16BD85F30037DC25 /* Specs-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Specs-Prefix.pch"; sourceTree = "<group>"; };
 		54BE762F16BD86DA0037DC25 /* SBStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBStub.h; sourceTree = "<group>"; };
 		54D7850416C6953600C1DDFC /* Stubbilino+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Stubbilino+Private.h"; sourceTree = "<group>"; };
@@ -146,6 +151,9 @@
 				54BE761D16BD80900037DC25 /* StubbilinoSpec.m */,
 				54E4B55816BE81DB006F6B76 /* SBTestObject.h */,
 				54E4B55916BE81DB006F6B76 /* SBTestObject.m */,
+				49C37D2719B2095A00ED94F3 /* TestEntity.h */,
+				49C37D2819B2095A00ED94F3 /* TestEntity.m */,
+				49C37D2419B207D600ED94F3 /* TestModel.xcdatamodeld */,
 				54BE761716BD80900037DC25 /* Supporting Files */,
 			);
 			path = Specs;
@@ -282,8 +290,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49C37D2919B2095A00ED94F3 /* TestEntity.m in Sources */,
 				49363D4D19A5FE5F0054348E /* StubbilinoSpec.m in Sources */,
 				49363D4E19A5FE610054348E /* SBTestObject.m in Sources */,
+				49C37D2619B207D600ED94F3 /* TestModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,6 +501,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		49C37D2419B207D600ED94F3 /* TestModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				49C37D2519B207D600ED94F3 /* TestModel.xcdatamodel */,
+			);
+			currentVersion = 49C37D2519B207D600ED94F3 /* TestModel.xcdatamodel */;
+			path = TestModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 54BE75F416BD80900037DC25 /* Project object */;
 }

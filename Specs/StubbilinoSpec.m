@@ -25,6 +25,8 @@
 #import "Stubbilino.h"
 #import "Stubbilino+Private.h"
 
+@import CoreData;
+#import "TestEntity.h"
 #import "SBTestObject.h"
 
 SpecBegin(Stubbilino)
@@ -269,6 +271,47 @@ describe(@"Key-value observed object", ^{
         }).notTo.raise(NSInvalidArgumentException);
 
         expect([object method]).to.equal(@"Test");
+    });
+});
+
+describe(@"managed object", ^{
+    __block TestEntity *managedObject = nil;
+
+    before(^{
+        NSManagedObjectContext *context = ({
+            NSURL *url = [[NSBundle bundleForClass:[self class]] URLForResource:@"TestModel"
+                                                                  withExtension:@"momd"];
+            NSManagedObjectModel *model = [[NSManagedObjectModel alloc]
+                                           initWithContentsOfURL:url];
+            NSPersistentStoreCoordinator *psc = [[NSPersistentStoreCoordinator alloc]
+                                                 initWithManagedObjectModel:model];
+            [psc addPersistentStoreWithType:NSInMemoryStoreType
+                              configuration:nil
+                                        URL:nil
+                                    options:nil
+                                      error:nil];
+            NSManagedObjectContext *ctx = [[NSManagedObjectContext alloc]
+                                           initWithConcurrencyType:NSMainQueueConcurrencyType];
+            ctx.persistentStoreCoordinator = psc;
+            ctx;
+        });
+        
+        managedObject = [NSEntityDescription insertNewObjectForEntityForName:@"TestEntity"
+                                                      inManagedObjectContext:context];
+
+        id <SBStub> stub = [Stubbilino stubObject:managedObject];
+        [stub stubMethod:@selector(property1) withBlock:^{
+            return @"Property1";
+        }];
+    });
+    
+    it(@"should stub normal property", ^{
+        expect(managedObject.property1).to.equal(@"Property1");
+    });
+
+    it(@"should be able to access non-stubbed property", ^{
+        managedObject.property2 = @"Property2";
+        expect(managedObject.property2).to.equal(@"Property2");
     });
 });
 
