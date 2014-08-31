@@ -274,28 +274,24 @@ describe(@"Key-value observed object", ^{
     });
 });
 
-describe(@"managed object", ^{
+describe(@"NSManagedObject subclass stubs", ^{
     __block TestEntity *managedObject = nil;
 
     before(^{
-        NSManagedObjectContext *context = ({
-            NSURL *url = [[NSBundle bundleForClass:[self class]] URLForResource:@"TestModel"
-                                                                  withExtension:@"momd"];
-            NSManagedObjectModel *model = [[NSManagedObjectModel alloc]
-                                           initWithContentsOfURL:url];
-            NSPersistentStoreCoordinator *psc = [[NSPersistentStoreCoordinator alloc]
-                                                 initWithManagedObjectModel:model];
-            [psc addPersistentStoreWithType:NSInMemoryStoreType
-                              configuration:nil
-                                        URL:nil
-                                    options:nil
-                                      error:nil];
-            NSManagedObjectContext *ctx = [[NSManagedObjectContext alloc]
-                                           initWithConcurrencyType:NSMainQueueConcurrencyType];
-            ctx.persistentStoreCoordinator = psc;
-            ctx;
-        });
-        
+        NSManagedObjectModel *model = [NSManagedObjectModel mergedModelFromBundles:@[ [NSBundle bundleForClass:[self class]] ]];
+
+        NSPersistentStoreCoordinator *psc = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
+
+        [psc addPersistentStoreWithType:NSInMemoryStoreType
+                          configuration:nil
+                                    URL:nil
+                                options:nil
+                                  error:nil];
+
+        NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+
+        context.persistentStoreCoordinator = psc;
+
         managedObject = [NSEntityDescription insertNewObjectForEntityForName:@"TestEntity"
                                                       inManagedObjectContext:context];
 
@@ -304,13 +300,14 @@ describe(@"managed object", ^{
             return @"Property1";
         }];
     });
-    
-    it(@"should stub normal property", ^{
+
+    it(@"should stub a normal property", ^{
         expect(managedObject.property1).to.equal(@"Property1");
     });
 
-    it(@"should be able to access non-stubbed property", ^{
+    it(@"should be able to access non-stubbed properties", ^{
         managedObject.property2 = @"Property2";
+
         expect(managedObject.property2).to.equal(@"Property2");
     });
 });
