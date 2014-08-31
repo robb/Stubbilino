@@ -67,8 +67,12 @@ static void SBRemoveStubClass(id object, void *context) {
         return (id<SBStub>)object;
     }
 
+    Class NSManagedObject = NSClassFromString(@"NSManagedObject");
+    BOOL isManagedObject = NSManagedObject != nil && [object isKindOfClass:NSManagedObject];
+    BOOL isMetaClass = class_isMetaClass(object_getClass(object));
+
     Class class;
-    if (class_isMetaClass(object_getClass(object))) {
+    if (isManagedObject || isMetaClass) {
         class = object_getClass(object);
     } else {
         class = [object class];
