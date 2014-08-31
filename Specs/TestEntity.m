@@ -8,10 +8,10 @@
 
 #import "TestEntity.h"
 
-
 @implementation TestEntity
 
 @dynamic property1;
+
 @dynamic property2;
 
 @end
