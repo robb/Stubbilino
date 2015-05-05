@@ -38,3 +38,6 @@
 + (void)removeAllStubs;
 
 @end
+
+FOUNDATION_EXPORT double Stubbilino_iOSVersionNumber;
+FOUNDATION_EXPORT const unsigned char Stubbilino_iOSVersionString[];
