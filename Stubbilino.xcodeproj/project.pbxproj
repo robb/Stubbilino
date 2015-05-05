@@ -13,12 +13,10 @@
 		49363D3E19A5FE560054348E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54BE761016BD80900037DC25 /* UIKit.framework */; };
 		49363D4D19A5FE5F0054348E /* StubbilinoSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 54BE761D16BD80900037DC25 /* StubbilinoSpec.m */; };
 		49363D4E19A5FE610054348E /* SBTestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 54E4B55916BE81DB006F6B76 /* SBTestObject.m */; };
-		49B0456C19A5FF4E009DB4DC /* libStubbilino.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54BE75FC16BD80900037DC25 /* libStubbilino.a */; };
 		49C37D2619B207D600ED94F3 /* TestModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 49C37D2419B207D600ED94F3 /* TestModel.xcdatamodeld */; };
 		49C37D2919B2095A00ED94F3 /* TestEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 49C37D2819B2095A00ED94F3 /* TestEntity.m */; };
-		54BE760016BD80900037DC25 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54BE75FF16BD80900037DC25 /* Foundation.framework */; };
-		54BE760516BD80900037DC25 /* Stubbilino.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 54BE760416BD80900037DC25 /* Stubbilino.h */; };
-		54BE760716BD80900037DC25 /* Stubbilino.m in Sources */ = {isa = PBXBuildFile; fileRef = 54BE760616BD80900037DC25 /* Stubbilino.m */; };
+		63985D221AF920B300F62764 /* Stubbilino.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63F524D31AF914470047099A /* Stubbilino.framework */; };
+		63E97BD91AF9242A0055D485 /* Stubbilino.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 63F524D31AF914470047099A /* Stubbilino.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		63F5250B1AF915D10047099A /* Stubbilino.h in Headers */ = {isa = PBXBuildFile; fileRef = 54BE760416BD80900037DC25 /* Stubbilino.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		63F5250C1AF915D40047099A /* Stubbilino+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 54D7850416C6953600C1DDFC /* Stubbilino+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		63F5250D1AF915D70047099A /* Stubbilino.m in Sources */ = {isa = PBXBuildFile; fileRef = 54BE760616BD80900037DC25 /* Stubbilino.m */; };
@@ -32,23 +30,23 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		49363D4819A5FE560054348E /* PBXContainerItemProxy */ = {
+		630264EE1AF924C400C99EDA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 54BE75F416BD80900037DC25 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 54BE75FB16BD80900037DC25;
-			remoteInfo = Stubbilino;
+			remoteGlobalIDString = 63F524D21AF914470047099A;
+			remoteInfo = "Stubbilino iOS";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		54BE75FA16BD80900037DC25 /* CopyFiles */ = {
+		63E97BD81AF9240F0055D485 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "include/${PRODUCT_NAME}";
-			dstSubfolderSpec = 16;
+			dstPath = "";
+			dstSubfolderSpec = 10;
 			files = (
-				54BE760516BD80900037DC25 /* Stubbilino.h in CopyFiles */,
+				63E97BD91AF9242A0055D485 /* Stubbilino.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,7 +58,6 @@
 		49C37D2519B207D600ED94F3 /* TestModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TestModel.xcdatamodel; sourceTree = "<group>"; };
 		49C37D2719B2095A00ED94F3 /* TestEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestEntity.h; sourceTree = "<group>"; };
 		49C37D2819B2095A00ED94F3 /* TestEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestEntity.m; sourceTree = "<group>"; };
-		54BE75FC16BD80900037DC25 /* libStubbilino.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libStubbilino.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		54BE75FF16BD80900037DC25 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		54BE760316BD80900037DC25 /* Stubbilino-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Stubbilino-Prefix.pch"; sourceTree = "<group>"; };
 		54BE760416BD80900037DC25 /* Stubbilino.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Stubbilino.h; sourceTree = "<group>"; };
@@ -77,7 +74,8 @@
 		54E5948A16BFFD86009A0594 /* SBClassStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBClassStub.h; sourceTree = "<group>"; };
 		63F524D31AF914470047099A /* Stubbilino.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Stubbilino.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63F524F11AF914AC0047099A /* Stubbilino.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Stubbilino.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C224E916077B4DAE9C33FF8B /* Pods-Specs.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Specs.xcconfig"; path = "Pods/Pods-Specs.xcconfig"; sourceTree = SOURCE_ROOT; };
+		75CBA3A03405F31C1A74A79C /* Pods-Specs.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Specs.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Specs/Pods-Specs.debug.xcconfig"; sourceTree = "<group>"; };
+		B99B45023CD64BAC3AC5DFBC /* Pods-Specs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Specs.release.xcconfig"; path = "Pods/Target Support Files/Pods-Specs/Pods-Specs.release.xcconfig"; sourceTree = "<group>"; };
 		C3F01AE75C0841BC898CE934 /* libPods-Specs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Specs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -86,19 +84,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49B0456C19A5FF4E009DB4DC /* libStubbilino.a in Frameworks */,
 				49363D3C19A5FE560054348E /* XCTest.framework in Frameworks */,
 				49363D3E19A5FE560054348E /* UIKit.framework in Frameworks */,
 				49363D3D19A5FE560054348E /* Foundation.framework in Frameworks */,
+				63985D221AF920B300F62764 /* Stubbilino.framework in Frameworks */,
 				473A7FD1293348229229F064 /* libPods-Specs.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		54BE75F916BD80900037DC25 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				54BE760016BD80900037DC25 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +109,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		204DB811AF311E193E5E7308 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				75CBA3A03405F31C1A74A79C /* Pods-Specs.debug.xcconfig */,
+				B99B45023CD64BAC3AC5DFBC /* Pods-Specs.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		54BE75F316BD80900037DC25 = {
 			isa = PBXGroup;
 			children = (
@@ -126,14 +125,13 @@
 				54BE761616BD80900037DC25 /* Specs */,
 				54BE75FE16BD80900037DC25 /* Frameworks */,
 				54BE75FD16BD80900037DC25 /* Products */,
-				C224E916077B4DAE9C33FF8B /* Pods-Specs.xcconfig */,
+				204DB811AF311E193E5E7308 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
 		54BE75FD16BD80900037DC25 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				54BE75FC16BD80900037DC25 /* libStubbilino.a */,
 				49363D3B19A5FE560054348E /* Specs.xctest */,
 				63F524D31AF914470047099A /* Stubbilino.framework */,
 				63F524F11AF914AC0047099A /* Stubbilino.framework */,
@@ -232,35 +230,19 @@
 				60594BDFFAF743A9A27B77F6 /* Check Pods Manifest.lock */,
 				49363D3719A5FE560054348E /* Sources */,
 				49363D3819A5FE560054348E /* Frameworks */,
+				63E97BD81AF9240F0055D485 /* CopyFiles */,
 				49363D3919A5FE560054348E /* Resources */,
 				BD87156A452D4195BB64E700 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				49363D4919A5FE560054348E /* PBXTargetDependency */,
+				630264EF1AF924C400C99EDA /* PBXTargetDependency */,
 			);
 			name = Specs;
 			productName = Specs;
 			productReference = 49363D3B19A5FE560054348E /* Specs.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		54BE75FB16BD80900037DC25 /* Stubbilino */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 54BE762116BD80900037DC25 /* Build configuration list for PBXNativeTarget "Stubbilino" */;
-			buildPhases = (
-				54BE75F816BD80900037DC25 /* Sources */,
-				54BE75F916BD80900037DC25 /* Frameworks */,
-				54BE75FA16BD80900037DC25 /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = Stubbilino;
-			productName = Stubbilino;
-			productReference = 54BE75FC16BD80900037DC25 /* libStubbilino.a */;
-			productType = "com.apple.product-type.library.static";
 		};
 		63F524D21AF914470047099A /* Stubbilino iOS */ = {
 			isa = PBXNativeTarget;
@@ -331,7 +313,6 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				54BE75FB16BD80900037DC25 /* Stubbilino */,
 				49363D3A19A5FE560054348E /* Specs */,
 				63F524D21AF914470047099A /* Stubbilino iOS */,
 				63F524F01AF914AC0047099A /* Stubbilino OS X */,
@@ -391,7 +372,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-Specs-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Specs/Pods-Specs-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -405,14 +386,6 @@
 				49363D4D19A5FE5F0054348E /* StubbilinoSpec.m in Sources */,
 				49363D4E19A5FE610054348E /* SBTestObject.m in Sources */,
 				49C37D2619B207D600ED94F3 /* TestModel.xcdatamodeld in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		54BE75F816BD80900037DC25 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				54BE760716BD80900037DC25 /* Stubbilino.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,10 +408,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		49363D4919A5FE560054348E /* PBXTargetDependency */ = {
+		630264EF1AF924C400C99EDA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 54BE75FB16BD80900037DC25 /* Stubbilino */;
-			targetProxy = 49363D4819A5FE560054348E /* PBXContainerItemProxy */;
+			target = 63F524D21AF914470047099A /* Stubbilino iOS */;
+			targetProxy = 630264EE1AF924C400C99EDA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -456,7 +429,7 @@
 /* Begin XCBuildConfiguration section */
 		49363D4B19A5FE560054348E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C224E916077B4DAE9C33FF8B /* Pods-Specs.xcconfig */;
+			baseConfigurationReference = 75CBA3A03405F31C1A74A79C /* Pods-Specs.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -480,6 +453,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				INFOPLIST_FILE = "Specs/Specs-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -487,7 +461,7 @@
 		};
 		49363D4C19A5FE560054348E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C224E916077B4DAE9C33FF8B /* Pods-Specs.xcconfig */;
+			baseConfigurationReference = B99B45023CD64BAC3AC5DFBC /* Pods-Specs.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -508,6 +482,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				INFOPLIST_FILE = "Specs/Specs-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -572,30 +547,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		54BE762216BD80900037DC25 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DSTROOT = /tmp/Stubbilino.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Stubbilino/Stubbilino-Prefix.pch";
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		54BE762316BD80900037DC25 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DSTROOT = /tmp/Stubbilino.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Stubbilino/Stubbilino-Prefix.pch";
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -772,15 +723,6 @@
 			buildConfigurations = (
 				54BE761F16BD80900037DC25 /* Debug */,
 				54BE762016BD80900037DC25 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		54BE762116BD80900037DC25 /* Build configuration list for PBXNativeTarget "Stubbilino" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				54BE762216BD80900037DC25 /* Debug */,
-				54BE762316BD80900037DC25 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
